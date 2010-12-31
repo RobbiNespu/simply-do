@@ -1,0 +1,17 @@
+#labels Featured
+=Release Plan=
+
+v0.9
+
+- Moving items between lists
+- Import & exporting data
+- Deferred item creation
+- Visual indicator that an item will be sorted
+- Bug fixes
+
+v1.0
+
+- Changes required for entry to Android Market
+- About dialog
+- Make lists view more distinct from the items view
+- Bug fixes
