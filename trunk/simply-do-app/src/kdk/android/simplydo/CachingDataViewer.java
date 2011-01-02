@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 Keith Kildare
+ * Copyright (C) 2010, 2011 Keith Kildare
  * 
  * This file is part of SimplyDo.
  * 
@@ -337,6 +337,48 @@ public class CachingDataViewer implements DataViewer
 
 
     @Override
+    public void moveItem(int itemId, int toListId)
+    {
+        ViewerTask task = new ViewerTask();
+        task.taskId = ViewerTask.MOVE_ITEM;
+        task.args = new Object[]{itemId, toListId};
+        
+        synchronized (viewerLock)
+        {
+            // queue fetch lists
+            taskQueue.add(task);
+            viewerLock.notifyAll();
+            
+            // remove from items data
+            ItemDesc itemInList = null;
+            for(ItemDesc i : itemData)
+            {
+                if(itemId == i.getId())
+                {
+                    itemInList = i;
+                    break;
+                }
+            }
+            if(itemInList != null)
+            {
+                itemData.remove(itemInList);
+                updateListStats();
+                ListDesc toList = findList(toListId);
+                toList.setTotalItems(toList.getTotalItems() + 1);
+                if(itemInList.isActive())
+                {
+                    toList.setActiveItems(toList.getActiveItems() + 1);
+                }
+            }
+            else
+            {
+                Log.w(L.TAG, "moveItem(): Didn't find item in current item data");
+            }
+        }        
+    }
+
+
+    @Override
     public void updateListLabel(int listId, String newLabel)
     {
         ViewerTask task = new ViewerTask();
@@ -445,7 +487,27 @@ public class CachingDataViewer implements DataViewer
     
     private void updateListStats()
     {
-        selectedList.setTotalItems(itemData.size());
+        updateListStats(selectedList);
+    }
+    
+    private ListDesc findList(int listId)
+    {
+        ListDesc rvList = null;
+        for(ListDesc list : listData)
+        {
+            if(list.getId() == listId)
+            {
+                rvList = list;
+                break;
+            }
+        }
+
+        return rvList;
+    }
+    
+    private void updateListStats(ListDesc listDesc)
+    {
+        listDesc.setTotalItems(itemData.size());
         int active = 0;
         for(ItemDesc item : itemData)
         {
@@ -454,7 +516,7 @@ public class CachingDataViewer implements DataViewer
                 active++;
             }
         }
-        selectedList.setActiveItems(active);
+        listDesc.setActiveItems(active);
     }
     
     private void doTaskAndWait(ViewerTask task)
@@ -553,6 +615,12 @@ public class CachingDataViewer implements DataViewer
                         task.done = true;
                         break;
                     }
+                    case ViewerTask.MOVE_ITEM:
+                    {
+                        dataManager.moveItem((Integer)task.args[0], (Integer)task.args[1]);
+                        task.done = true;
+                        break;
+                    }
                     case ViewerTask.DELETE_LIST:
                     {
                         dataManager.deleteList((Integer)task.args[0]);
@@ -632,6 +700,7 @@ public class CachingDataViewer implements DataViewer
         private static final int CREATE_LIST = 8;
         private static final int CREATE_ITEM = 9;
         private static final int UPDATE_STARNESS = 10;
+        private static final int MOVE_ITEM = 11;
         
         private int taskId;
         private Object[] args;
