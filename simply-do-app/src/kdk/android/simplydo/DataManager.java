@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 Keith Kildare
+ * Copyright (C) 2010, 2011 Keith Kildare
  * 
  * This file is part of SimplyDo.
  * 
@@ -197,6 +197,19 @@ public class DataManager
         SQLiteStatement stmt = db.compileStatement("update lists set label=? where id=?");        
         stmt.bindString(1, newLabel);
         stmt.bindLong(2, listId);
+        stmt.execute();
+        stmt.close();
+        db.close();
+    }
+    
+    public void moveItem(int itemId, int toListId)
+    {
+        Log.d(L.TAG, "Moving item " + itemId + " to list " + toListId);
+        
+        SQLiteDatabase db = helper.getWritableDatabase();
+        SQLiteStatement stmt = db.compileStatement("update items set list_id=? where id=?");        
+        stmt.bindLong(1, toListId);
+        stmt.bindLong(2, itemId);
         stmt.execute();
         stmt.close();
         db.close();

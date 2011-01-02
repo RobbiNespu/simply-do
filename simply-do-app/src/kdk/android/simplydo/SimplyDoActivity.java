@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 Keith Kildare
+ * Copyright (C) 2010, 2011 Keith Kildare
  * 
  * This file is part of SimplyDo.
  * 
@@ -58,11 +58,13 @@ public class SimplyDoActivity extends Activity
     private static final int TOGGLE_STAR     = 105;
     private static final int SETTINGS        = 106;
     private static final int SORT_NOW        = 107;
+    private static final int MOVE_ITEM       = 108;
     
     private static final int DIALOG_LIST_DELETE = 200;
     private static final int DIALOG_ITEM_DELETE = 201;
     private static final int DIALOG_LIST_EDIT = 202;
     private static final int DIALOG_ITEM_EDIT = 203;
+    private static final int DIALOG_ITEM_MOVE = 204;
     
     private DataViewer dataViewer;
     private ListPropertiesAdapter listPropertiesAdapter;
@@ -85,6 +87,8 @@ public class SimplyDoActivity extends Activity
     
     private ListListSorter listListSorter = new ListListSorter();
     private ItemListSorter itemListSorter = new ItemListSorter();
+    
+    private MoveToAction moveItemToAction;
 
     
     /** Called when the activity is first created. */
@@ -239,6 +243,12 @@ public class SimplyDoActivity extends Activity
                 
         dataViewer.fetchLists();
         listPropertiesAdapter.notifyDataSetChanged();
+        
+        moveItemToAction = new MoveToAction(
+                this, 
+                dataViewer, 
+                listPropertiesAdapter, 
+                itemPropertiesAdapter);
         
         if (savedInstanceState==null) 
         {
@@ -433,6 +443,17 @@ public class SimplyDoActivity extends Activity
             dataViewer.updateItemStarness(ctxItem.getId(), !ctxItem.isStar());
             itemPropertiesAdapter.notifyDataSetChanged();
             return true;
+        case MOVE_ITEM:
+            if(ctxItem == null)
+            {
+                Log.e(L.TAG, "Move item selected but no context item!");
+                return true;
+            }
+            Log.d(L.TAG, "Displaying move item dialog");
+            
+            showDialog(DIALOG_ITEM_MOVE);
+            
+            return true;
         }
         
         return super.onMenuItemSelected(featureId, item);
@@ -467,6 +488,10 @@ public class SimplyDoActivity extends Activity
                 AlertDialog editDialog = listEditBuilder.create();
                 editDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
                 return editDialog;
+            }
+            case DIALOG_ITEM_MOVE:
+            {
+                return moveItemToAction.createDialog();
             }
         }
         
@@ -503,6 +528,16 @@ public class SimplyDoActivity extends Activity
                 Log.e(L.TAG, "onPrepareDialog()/DIALOG_LIST_EDIT called for nonexistant list");
             }
             break;
+        case DIALOG_ITEM_MOVE:
+            if(ctxItem != null)
+            {
+                moveItemToAction.prepareDialog(dialog, ctxItem);
+            }
+            else
+            {
+                Log.e(L.TAG, "onPrepareDialog()/DIALOG_ITEM_MOVE called for nonexistant item");
+            }
+            break;
         }
 
     }
@@ -510,6 +545,8 @@ public class SimplyDoActivity extends Activity
     
     private void listSelected(ListDesc list, boolean animate)
     {
+        //Log.v(L.TAG, "SimplyDoActivity.listSelected() called on list " + list.getId());
+        
         setTitle(list.getLabel());
         
         dataViewer.setSelectedList(list);
@@ -655,6 +692,10 @@ public class SimplyDoActivity extends Activity
                 toggleText = "Add Star";
             }
             menu.add(Menu.NONE, TOGGLE_STAR, Menu.NONE, toggleText);
+            if(dataViewer.getListData().size() > 1)
+            {
+                menu.add(Menu.NONE, MOVE_ITEM, Menu.NONE, "Move To");
+            }
         }
 
         

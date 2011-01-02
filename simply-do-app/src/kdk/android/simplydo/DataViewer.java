@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 Keith Kildare
+ * Copyright (C) 2010, 2011 Keith Kildare
  * 
  * This file is part of SimplyDo.
  * 
@@ -33,6 +33,7 @@ public interface DataViewer
     public void updateItemStarness(int itemId, boolean star);
     public void updateItemLabel(int itemId, String newLabel);
     public void updateListLabel(int listId, String newLabel);
+    public void moveItem(int itemId, int toListId);
     public void createList(String label);
     public void createItem(String label);
     

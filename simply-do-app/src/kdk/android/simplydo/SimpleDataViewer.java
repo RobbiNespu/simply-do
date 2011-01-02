@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 Keith Kildare
+ * Copyright (C) 2010, 2011 Keith Kildare
  * 
  * This file is part of SimplyDo.
  * 
@@ -111,6 +111,16 @@ public class SimpleDataViewer implements DataViewer
     public void updateListLabel(int listId, String newLabel)
     {
         dataManager.updateListLabel(listId, newLabel);
+        fetchLists();
+    }
+    
+    public void moveItem(int itemId, int toListId)
+    {
+        dataManager.moveItem(itemId, toListId);
+        if(selectedList != null)
+        {
+            fetchItems(selectedList.getId());
+        }
         fetchLists();
     }
     
