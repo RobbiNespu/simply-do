@@ -29,6 +29,7 @@ import android.content.DialogInterface;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MoveToAction
 {
@@ -156,6 +157,9 @@ public class MoveToAction
         dataViewer.moveItem(selectItemId, listDesc.getId());
         itemPropertiesAdapter.notifyDataSetChanged();
         listPropertiesAdapter.notifyDataSetChanged();
+        
+        Toast t = Toast.makeText(context, "Item " + ctxItem.getLabel() + " moved to " + listDesc.getLabel(), Toast.LENGTH_SHORT);
+        t.show();
         
         endDialog();
     }
