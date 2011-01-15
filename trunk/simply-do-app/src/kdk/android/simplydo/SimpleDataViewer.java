@@ -167,6 +167,16 @@ public class SimpleDataViewer implements DataViewer
         fetchLists();
     }
     
+    public void invalidateCache()
+    {
+        // no cache to void
+    }
+    
+    public void flush()
+    {
+        // Do nothing
+    }
+    
     public void close()
     {
         // Do nothing

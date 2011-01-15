@@ -66,6 +66,8 @@ public class SimplyDoActivity extends Activity
     private static final int DIALOG_ITEM_EDIT = 203;
     private static final int DIALOG_ITEM_MOVE = 204;
     
+    private static SimplyDoActivity instance = null;
+    
     private DataViewer dataViewer;
     private ListPropertiesAdapter listPropertiesAdapter;
     private ItemPropertiesAdapter itemPropertiesAdapter;
@@ -264,10 +266,35 @@ public class SimplyDoActivity extends Activity
                 listSelected(listDesc, false);
             }
         }
+        
+        instance = this;
     }
     
+    public static SimplyDoActivity getInstance()
+    {
+        return instance;
+    }
     
+    public DataViewer getDataVeiwer()
+    {
+        return dataViewer;
+    }
     
+    public void cacheInvalidated()
+    {
+        Log.v(L.TAG, "Entered cacheInvalidated()");
+        
+        ViewSwitcher viewSwitch = (ViewSwitcher)findViewById(R.id.ListsItemsSwitcher);
+        int displayed = viewSwitch.getDisplayedChild();
+        if(displayed == 1)
+        {
+            setTitle(R.string.app_name);
+            viewSwitch.showPrevious();
+        }
+
+        itemPropertiesAdapter.notifyDataSetChanged();
+        listPropertiesAdapter.notifyDataSetChanged();
+    }
     
     @Override
     protected void onStart()
@@ -311,6 +338,8 @@ public class SimplyDoActivity extends Activity
         Log.v(L.TAG, "onDestroy() called");
         
         dataViewer.close();
+        
+        instance = null;
     }
 
 

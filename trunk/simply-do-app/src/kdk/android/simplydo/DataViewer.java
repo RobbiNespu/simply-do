@@ -44,5 +44,7 @@ public interface DataViewer
     
     public void deleteList(int listId);
     public void deleteItem(int itemId);
+    public void flush();
+    public void invalidateCache();
     public void close();
 }
