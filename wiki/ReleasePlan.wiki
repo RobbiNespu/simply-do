@@ -3,8 +3,8 @@
 
 ==v0.9==
 
- * Moving items between lists
- * Import & exporting data
+ * Moving items between lists (Done)
+ * Import & exporting data (Done)
  * Deferred item creation
  * Visual indicator that an item will be sorted
  * Bug fixes
