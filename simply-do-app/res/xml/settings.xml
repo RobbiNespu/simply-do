@@ -13,4 +13,7 @@
   		android:entries="@array/listSortingEntries"
         android:entryValues="@array/listSortingValues" >
   </ListPreference>
+  <Preference android:title="Backup" android:key="backupDb">
+  </Preference>
+<Preference android:title="Restore" android:key="restoreDb"></Preference>
 </PreferenceScreen>

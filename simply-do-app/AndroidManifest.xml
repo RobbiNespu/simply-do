@@ -13,8 +13,11 @@
                   android:label="@string/settings_title">
         </activity>
 
-    </application>
+    <activity android:name=".RestoreActivity" android:label="@string/restore_title"></activity>
+</application>
 
 
 <uses-sdk android:targetSdkVersion="7" android:minSdkVersion="7"></uses-sdk>
+
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
 </manifest> 

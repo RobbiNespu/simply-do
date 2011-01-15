@@ -66,6 +66,16 @@ public class CachingDataViewer implements DataViewer
         dbUpdateThread.start();
     }
     
+    public void invalidateCache()
+    {
+        setSelectedList(null);
+        fetchLists();
+    }
+    
+    public void flush()
+    {
+        flushTasks();
+    }
     
     public void close()
     {

@@ -18,4 +18,5 @@
 <item>alphabetical</item>
 </string-array>
 <string name="logtag">SimplyDo</string>
+<string name="restore_title">Restore Files</string>
 </resources>
