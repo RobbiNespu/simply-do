@@ -467,7 +467,7 @@ public class SimplyDoActivity extends Activity
             }
             Log.d(L.TAG, "Toggling star");
             
-            dataViewer.updateItemStarness(ctxItem.getId(), !ctxItem.isStar());
+            dataViewer.updateItemStarness(ctxItem, !ctxItem.isStar());
             itemListSorter.markStarredUpdate(ctxItem);
             itemPropertiesAdapter.notifyDataSetChanged();
             return true;
@@ -604,7 +604,7 @@ public class SimplyDoActivity extends Activity
     {
         Log.v(L.TAG, "Item selected " + item.getLabel());
         
-        dataViewer.updateItemActiveness(item.getId(), !item.isActive());
+        dataViewer.updateItemActiveness(item, !item.isActive());
         itemListSorter.markActivityUpdate(item);
         itemPropertiesAdapter.notifyDataSetChanged();
         listPropertiesAdapter.notifyDataSetChanged();
@@ -641,7 +641,7 @@ public class SimplyDoActivity extends Activity
             if(currentList != null)
             {
                 dataViewer.createItem(txtTrim);
-                itemListSorter.sort(dataViewer.getItemData());
+                //itemListSorter.sort(dataViewer.getItemData());
                 itemPropertiesAdapter.notifyDataSetChanged();
                 listPropertiesAdapter.notifyDataSetChanged();
                 editText.getText().clear();
@@ -660,7 +660,7 @@ public class SimplyDoActivity extends Activity
         
         if(txt.trim().length() > 0)
         {
-            dataViewer.updateItemLabel(ctxItem.getId(), txt);
+            dataViewer.updateItemLabel(ctxItem, txt);
             itemListSorter.markEditUpdate(ctxItem);
             itemPropertiesAdapter.notifyDataSetChanged();
         }
@@ -693,7 +693,7 @@ public class SimplyDoActivity extends Activity
     {
         Log.d(L.TAG, "Deleting item " + ctxItem.getLabel());
         
-        dataViewer.deleteItem(ctxItem.getId());
+        dataViewer.deleteItem(ctxItem);
         itemPropertiesAdapter.notifyDataSetChanged();
         listPropertiesAdapter.notifyDataSetChanged();
         

@@ -40,17 +40,20 @@ public class SimpleDataViewer implements DataViewer
     }
     
     
+    @Override
     public List<ItemDesc> getItemData()
     {
         return itemData;
     }
 
     
+    @Override
     public List<ListDesc> getListData()
     {
         return listData;
     }
     
+    @Override
     public void setSelectedList(ListDesc selectedList)
     {
         this.selectedList = selectedList;
@@ -64,23 +67,29 @@ public class SimpleDataViewer implements DataViewer
         }           
     }
     
+    @Override
     public ListDesc getSelectedList()
     {
         return selectedList;
     }
     
+    @Override
     public void fetchLists()
     {
         listData = dataManager.fetchLists();
     }
     
+    @Override
     public void fetchItems(int listId)
     {
-        itemData = dataManager.fetchItems(listId);
+        itemData.clear();
+        dataManager.fetchItems(listId, itemData);
     }
     
-    public void updateItemActiveness(int itemId, boolean active)
+    @Override
+    public void updateItemActiveness(ItemDesc item, boolean active)
     {
+        int itemId = item.getId();
         dataManager.updateItemActiveness(itemId, active);
         if(selectedList != null)
         {
@@ -89,8 +98,10 @@ public class SimpleDataViewer implements DataViewer
         fetchLists();
     }
     
-    public void updateItemStarness(int itemId, boolean star)
+    @Override
+    public void updateItemStarness(ItemDesc item, boolean star)
     {
+        int itemId = item.getId();
         dataManager.updateItemStarness(itemId, star);
         if(selectedList != null)
         {
@@ -99,8 +110,10 @@ public class SimpleDataViewer implements DataViewer
         fetchLists();
     }
     
-    public void updateItemLabel(int itemId, String newLabel)
+    @Override
+    public void updateItemLabel(ItemDesc item, String newLabel)
     {
+        int itemId = item.getId();
         dataManager.updateItemLabel(itemId, newLabel);
         if(selectedList != null)
         {
@@ -108,14 +121,17 @@ public class SimpleDataViewer implements DataViewer
         }
     }
     
+    @Override
     public void updateListLabel(int listId, String newLabel)
     {
         dataManager.updateListLabel(listId, newLabel);
         fetchLists();
     }
     
-    public void moveItem(int itemId, int toListId)
+    @Override
+    public void moveItem(ItemDesc item, int toListId)
     {
+        int itemId = item.getId();
         dataManager.moveItem(itemId, toListId);
         if(selectedList != null)
         {
@@ -124,12 +140,14 @@ public class SimpleDataViewer implements DataViewer
         fetchLists();
     }
     
+    @Override
     public void createList(String label)
     {
         dataManager.createList(label);
         fetchLists();
     }
     
+    @Override
     public void createItem(String label)
     {
         int listId = selectedList.getId();
@@ -137,6 +155,7 @@ public class SimpleDataViewer implements DataViewer
         fetchItems(listId);
     }
     
+    @Override
     public void deleteInactive()
     {
         if(selectedList == null)
@@ -151,14 +170,17 @@ public class SimpleDataViewer implements DataViewer
         fetchLists();    
     }
     
+    @Override
     public void deleteList(int listId)
     {
         dataManager.deleteList(listId);
         fetchLists();
     }
     
-    public void deleteItem(int itemId)
+    @Override
+    public void deleteItem(ItemDesc item)
     {
+        int itemId = item.getId();
         dataManager.deleteItem(itemId);
         if(selectedList != null)
         {
@@ -167,16 +189,19 @@ public class SimpleDataViewer implements DataViewer
         fetchLists();
     }
     
+    @Override
     public void invalidateCache()
     {
         // no cache to void
     }
     
+    @Override
     public void flush()
     {
         // Do nothing
     }
     
+    @Override
     public void close()
     {
         // Do nothing

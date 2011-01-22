@@ -29,11 +29,11 @@ public interface DataViewer
     public ListDesc getSelectedList();
     public void fetchLists();
     public void fetchItems(int listId);
-    public void updateItemActiveness(int itemId, boolean active);
-    public void updateItemStarness(int itemId, boolean star);
-    public void updateItemLabel(int itemId, String newLabel);
+    public void updateItemActiveness(ItemDesc item, boolean active);
+    public void updateItemStarness(ItemDesc item, boolean star);
+    public void updateItemLabel(ItemDesc item, String newLabel);
     public void updateListLabel(int listId, String newLabel);
-    public void moveItem(int itemId, int toListId);
+    public void moveItem(ItemDesc item, int toListId);
     public void createList(String label);
     public void createItem(String label);
     
@@ -43,7 +43,7 @@ public interface DataViewer
     public void deleteInactive();
     
     public void deleteList(int listId);
-    public void deleteItem(int itemId);
+    public void deleteItem(ItemDesc item);
     public void flush();
     public void invalidateCache();
     public void close();

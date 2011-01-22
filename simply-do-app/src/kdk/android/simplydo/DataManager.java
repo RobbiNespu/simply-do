@@ -103,9 +103,8 @@ public class DataManager
     	return rv;
     }
     
-    public List<ItemDesc> fetchItems(int listId)
+    public void fetchItems(int listId, List<ItemDesc> rv)
     {
-        List<ItemDesc> rv = new ArrayList<ItemDesc>();
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor cursor = db.query("items", new String[] { "id", "label", "active", "star" },
             "list_id=?", new String[]{"" + listId}, null, null, "id desc");
@@ -130,13 +129,12 @@ public class DataManager
         Log.d(L.TAG, "fetchItems returned " + rv.size() + " items");
 
         db.close();
-        return rv;
     }
     
     
     public void updateItemActiveness(int itemId, boolean active)
     {
-        Log.d(L.TAG, "Setting active property of  " + itemId + " to " + active);
+        Log.d(L.TAG, "Setting active property of " + itemId + " to " + active);
 
         //long t = System.currentTimeMillis();
         SQLiteDatabase db = helper.getWritableDatabase();
@@ -227,18 +225,25 @@ public class DataManager
         db.close();
     }
     
-    public void createItem(int list_id, String label)
+    public int createItem(int list_id, String label)
     {
-        Log.d(L.TAG, "Insert item " + label);
+        Log.v(L.TAG, "DataManager.createItem(): Insert item " + label);
 
         SQLiteDatabase db = helper.getWritableDatabase();
         SQLiteStatement stmt = db.compileStatement("insert into items (list_id,label,active) values (?,?,?)");        
         stmt.bindLong(1, list_id);
         stmt.bindString(2, label);
         stmt.bindLong(3, 1);
-        stmt.executeInsert();
+        long id = stmt.executeInsert();
         stmt.close();
         db.close();
+        
+        Log.d(L.TAG, "DataManager.createItem(): Inserted item and got id " + id);
+        if(id == -1)
+        {
+            Log.e(L.TAG, "DataManager.createItem(): Attempt to insert item failed. Got " + id + " from executeInsert()");
+        }
+        return (int)id;
     }
     
     public void deleteInactive(int list_id)

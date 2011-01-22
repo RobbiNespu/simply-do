@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 Keith Kildare
+ * Copyright (C) 2010, 2011 Keith Kildare
  * 
  * This file is part of SimplyDo.
  * 
@@ -21,7 +21,7 @@ package kdk.android.simplydo;
 
 public class ItemDesc
 {
-	private int id;
+	private volatile int id;
 	private String label;
 	private boolean active;
     private boolean star;
