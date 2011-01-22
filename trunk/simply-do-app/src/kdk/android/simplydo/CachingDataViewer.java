@@ -33,7 +33,7 @@ public class CachingDataViewer implements DataViewer
 {
     private DataManager dataManager;
     
-    private List<ItemDesc> itemData = new ArrayList<ItemDesc>();
+    private List<ItemDesc> itemData = new LinkedList<ItemDesc>();
     private List<ListDesc> listData = new ArrayList<ListDesc>();
     
     private Thread dbUpdateThread;
@@ -140,7 +140,8 @@ public class CachingDataViewer implements DataViewer
         // of task and we've just flushed the task queue
         if(selectedList != null)
         {
-            itemData = dataManager.fetchItems(selectedList.getId());
+            itemData.clear();
+            dataManager.fetchItems(selectedList.getId(), itemData);
         }
         else
         {
@@ -183,22 +184,19 @@ public class CachingDataViewer implements DataViewer
         
         int listId = selectedList.getId();
         
+        ItemDesc newItem = new ItemDesc(-1, label, true, false);
+        
         ViewerTask createTask = new ViewerTask();
         createTask.taskId = ViewerTask.CREATE_ITEM;
-        createTask.args = new Object[]{listId, label};
-        
-        ViewerTask fetchTask = new ViewerTask();
-        fetchTask.taskId = ViewerTask.FETCH_ITEMS;
-        fetchTask.args = new Object[]{listId};
+        createTask.args = new Object[]{listId, label, newItem};
         
         synchronized (viewerLock)
         {
             // queue fetch lists
             taskQueue.add(createTask);
-            taskQueue.add(fetchTask);
             viewerLock.notifyAll();
             
-            flushTasksNoLock();
+            itemData.add(0, newItem);
             
             updateListStats();
         }
@@ -263,8 +261,12 @@ public class CachingDataViewer implements DataViewer
 
 
     @Override
-    public void deleteItem(int itemId)
+    public void deleteItem(ItemDesc item)
     {
+        itemIdBarrier(item);
+        
+        int itemId = item.getId();        
+        
         ViewerTask task = new ViewerTask();
         task.taskId = ViewerTask.DELETE_ITEM;
         task.args = new Object[]{itemId};
@@ -321,8 +323,11 @@ public class CachingDataViewer implements DataViewer
 
 
     @Override
-    public void updateItemLabel(int itemId, String newLabel)
+    public void updateItemLabel(ItemDesc item, String newLabel)
     {
+        itemIdBarrier(item);
+        int itemId = item.getId();
+        
         ViewerTask task = new ViewerTask();
         task.taskId = ViewerTask.UPDATE_ITEM_LABEL;
         task.args = new Object[]{itemId, newLabel};
@@ -347,8 +352,11 @@ public class CachingDataViewer implements DataViewer
 
 
     @Override
-    public void moveItem(int itemId, int toListId)
+    public void moveItem(ItemDesc item, int toListId)
     {
+        itemIdBarrier(item);
+        int itemId = item.getId();
+
         ViewerTask task = new ViewerTask();
         task.taskId = ViewerTask.MOVE_ITEM;
         task.args = new Object[]{itemId, toListId};
@@ -414,8 +422,11 @@ public class CachingDataViewer implements DataViewer
     }
     
 
-    public void updateItemActiveness(int itemId, boolean active)
+    public void updateItemActiveness(ItemDesc item, boolean active)
     {
+        itemIdBarrier(item);
+        int itemId = item.getId();
+        
         ViewerTask task = new ViewerTask();
         task.taskId = ViewerTask.UPDATE_ACTIVENESS;
         task.args = new Object[]{itemId, active};
@@ -447,8 +458,11 @@ public class CachingDataViewer implements DataViewer
     }
     
 
-    public void updateItemStarness(int itemId, boolean star)
+    public void updateItemStarness(ItemDesc item, boolean star)
     {
+        itemIdBarrier(item);
+        int itemId = item.getId();
+        
         ViewerTask task = new ViewerTask();
         task.taskId = ViewerTask.UPDATE_STARNESS;
         task.args = new Object[]{itemId, star};
@@ -467,6 +481,21 @@ public class CachingDataViewer implements DataViewer
                     i.setStar(star);
                     break;
                 }
+            }
+        }
+    }
+    
+    
+    private void itemIdBarrier(ItemDesc item)
+    {
+        if(item.getId() == -1)
+        {
+            Log.v(L.TAG, "CachingDataViewer.itemIdBarrier(): Used");
+            flushTasks();
+            
+            if(item.getId() == -1)
+            {
+                Log.e(L.TAG, "CachingDataViewer.itemIdBarrier(): failed!");
             }
         }
     }
@@ -591,10 +620,10 @@ public class CachingDataViewer implements DataViewer
                     }
                     case ViewerTask.FETCH_ITEMS:
                     {
-                        List<ItemDesc> items = dataManager.fetchItems((Integer)task.args[0]);
                         synchronized (viewerLock)
                         {
-                            itemData = items;
+                            itemData.clear();
+                            dataManager.fetchItems((Integer)task.args[0], itemData);
                             task.done = true;
                             viewerLock.notifyAll();
                         }
@@ -657,7 +686,9 @@ public class CachingDataViewer implements DataViewer
                     }
                     case ViewerTask.CREATE_ITEM:
                     {
-                        dataManager.createItem((Integer)task.args[0], (String)task.args[1]);
+                        ItemDesc item = (ItemDesc)task.args[2];
+                        int id = dataManager.createItem((Integer)task.args[0], (String)task.args[1]);
+                        item.setId(id);
                         task.done = true;
                         break;
                     }

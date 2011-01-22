@@ -153,8 +153,7 @@ public class MoveToAction
         Log.d(L.TAG, "MoveToAction.listSelected(): called");
         
         ListDesc listDesc = dataViewList.get(selectedItem);
-        int selectItemId = ctxItem.getId();
-        dataViewer.moveItem(selectItemId, listDesc.getId());
+        dataViewer.moveItem(ctxItem, listDesc.getId());
         itemPropertiesAdapter.notifyDataSetChanged();
         listPropertiesAdapter.notifyDataSetChanged();
         
