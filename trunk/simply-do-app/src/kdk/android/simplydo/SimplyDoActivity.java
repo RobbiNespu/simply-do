@@ -468,6 +468,7 @@ public class SimplyDoActivity extends Activity
             Log.d(L.TAG, "Toggling star");
             
             dataViewer.updateItemStarness(ctxItem.getId(), !ctxItem.isStar());
+            itemListSorter.markStarredUpdate(ctxItem);
             itemPropertiesAdapter.notifyDataSetChanged();
             return true;
         case MOVE_ITEM:
@@ -604,6 +605,7 @@ public class SimplyDoActivity extends Activity
         Log.v(L.TAG, "Item selected " + item.getLabel());
         
         dataViewer.updateItemActiveness(item.getId(), !item.isActive());
+        itemListSorter.markActivityUpdate(item);
         itemPropertiesAdapter.notifyDataSetChanged();
         listPropertiesAdapter.notifyDataSetChanged();
     }
@@ -659,6 +661,7 @@ public class SimplyDoActivity extends Activity
         if(txt.trim().length() > 0)
         {
             dataViewer.updateItemLabel(ctxItem.getId(), txt);
+            itemListSorter.markEditUpdate(ctxItem);
             itemPropertiesAdapter.notifyDataSetChanged();
         }
     }

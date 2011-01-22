@@ -109,6 +109,41 @@ public class ItemListSorter
     }
     
     
+    public void markEditUpdate(ItemDesc item)
+    {
+        switch(sortingMode)
+        {
+        case ACTIVE_STARRED:
+        case STARRED:
+            item.setSorted(false);
+            break;
+        }        
+    }
+    
+    
+    public void markActivityUpdate(ItemDesc item)
+    {
+        switch(sortingMode)
+        {
+        case ACTIVE_STARRED:
+            item.setSorted(false);
+            break;
+        }        
+    }
+    
+    
+    public void markStarredUpdate(ItemDesc item)
+    {
+        switch(sortingMode)
+        {
+        case ACTIVE_STARRED:
+        case STARRED:
+            item.setSorted(false);
+            break;
+        }        
+    }
+    
+    
     public void sort(List<ItemDesc> list)
     {
         if(list == null)
@@ -132,6 +167,15 @@ public class ItemListSorter
             Collections.sort(list, activeStarredCompare);
             break;
         }
+        
+        markAsSorted(list);
     }
 
+    private void markAsSorted(List<ItemDesc> items)
+    {
+        for(ItemDesc item : items)
+        {
+            item.setSorted(true);
+        }
+    }
 }
