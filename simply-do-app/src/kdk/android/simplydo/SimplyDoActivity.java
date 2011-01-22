@@ -65,6 +65,7 @@ public class SimplyDoActivity extends Activity
     private static final int DIALOG_LIST_EDIT = 202;
     private static final int DIALOG_ITEM_EDIT = 203;
     private static final int DIALOG_ITEM_MOVE = 204;
+    private static final int DIALOG_DELETE_INACTIVE = 205;
     
     private static SimplyDoActivity instance = null;
     
@@ -76,21 +77,21 @@ public class SimplyDoActivity extends Activity
     private ItemsListReactor itemsListReactor = new ItemsListReactor();
     
     private ItemDesc ctxItem;
-    private AlertDialog.Builder itemDeleteBuilder;
-    
     private ListDesc ctxList;
-    private AlertDialog.Builder listDeleteBuilder;
     
-    private AlertDialog.Builder itemEditBuilder;    
+    private AlertDialog.Builder itemDeleteBuilder;
+    private AlertDialog.Builder listDeleteBuilder;
+    private AlertDialog.Builder itemEditBuilder;
+    private AlertDialog.Builder listEditBuilder;
+    
     private EditText itemEditView;
-
-    private AlertDialog.Builder listEditBuilder;    
     private EditText listEditView;
     
     private ListListSorter listListSorter = new ListListSorter();
     private ItemListSorter itemListSorter = new ItemListSorter();
     
     private MoveToAction moveItemToAction;
+    private DeleteInactiveAction deleteInactiveAction;
 
     
     /** Called when the activity is first created. */
@@ -218,11 +219,7 @@ public class SimplyDoActivity extends Activity
                     itemEditOk();
                 }
             })
-            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                     //dialog.cancel();
-                }
-            });
+            .setNegativeButton("Cancel", null);
         
         View listEditLayout = inflater.inflate(R.layout.list_edit, (ViewGroup)findViewById(R.id.list_edit_root));
 
@@ -237,16 +234,18 @@ public class SimplyDoActivity extends Activity
                     listEditOk();
                 }
             })
-            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    // do nothing
-                }
-            });
+            .setNegativeButton("Cancel", null);
                 
         dataViewer.fetchLists();
         listPropertiesAdapter.notifyDataSetChanged();
         
         moveItemToAction = new MoveToAction(
+                this, 
+                dataViewer, 
+                listPropertiesAdapter, 
+                itemPropertiesAdapter);
+        
+        deleteInactiveAction = new DeleteInactiveAction(
                 this, 
                 dataViewer, 
                 listPropertiesAdapter, 
@@ -419,9 +418,8 @@ public class SimplyDoActivity extends Activity
             }
             Log.d(L.TAG, "Deleting Inactive");
             
-            dataViewer.deleteInactive();
-            itemPropertiesAdapter.notifyDataSetChanged();
-            listPropertiesAdapter.notifyDataSetChanged();
+            deleteInactiveAction.deleteInactive(DIALOG_DELETE_INACTIVE);
+            
             return true;
         }
         case SETTINGS:
@@ -521,6 +519,10 @@ public class SimplyDoActivity extends Activity
             case DIALOG_ITEM_MOVE:
             {
                 return moveItemToAction.createDialog();
+            }
+            case DIALOG_DELETE_INACTIVE:
+            {
+                return deleteInactiveAction.createDialog();
             }
         }
         
