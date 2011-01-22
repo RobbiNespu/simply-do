@@ -25,6 +25,7 @@ public class ItemDesc
 	private String label;
 	private boolean active;
     private boolean star;
+    private boolean sorted = false;
 	
 	public ItemDesc(int id, String label, boolean active, boolean star)
 	{
@@ -74,5 +75,14 @@ public class ItemDesc
         this.star = star;
     }
 	
+    public boolean isSorted()
+    {
+        return sorted;
+    }
+    
+    public void setSorted(boolean sorted)
+    {
+        this.sorted = sorted;
+    }
 	
 }

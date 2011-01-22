@@ -96,6 +96,17 @@ public class ItemPropertiesAdapter extends BaseAdapter
             ImageSwitcher starSwitch = (ImageSwitcher)rv.findViewById(R.id.StarSwitcher);
             starSwitch.setVisibility(it.isStar()?View.VISIBLE:View.INVISIBLE);
             starSwitch.setDisplayedChild(it.isActive()?0:1);
+            
+            View sortedMarker = (View)rv.findViewById(R.id.SortedMarker);
+            if(it.isSorted())
+            {
+                sortedMarker.setVisibility(View.INVISIBLE);
+            }
+            else
+            {
+                sortedMarker.setVisibility(View.VISIBLE);
+            }
+
         }
         catch(Exception e)
         {
