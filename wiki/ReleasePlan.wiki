@@ -5,8 +5,8 @@
 
  * Moving items between lists (Done)
  * Import & exporting data (Done)
- * Deferred item creation
- * Visual indicator that an item will be sorted
+ * Deferred item creation (Done)
+ * Visual indicator that an item will be sorted (Done)
  * Bug fixes
 
 ==v1.0==
