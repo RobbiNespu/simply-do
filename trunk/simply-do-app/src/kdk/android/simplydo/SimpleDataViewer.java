@@ -80,6 +80,23 @@ public class SimpleDataViewer implements DataViewer
     }
     
     @Override
+    public ListDesc fetchList(int listId)
+    {
+        ListDesc rv = null;
+        
+        for(ListDesc list : listData)
+        {
+            if(list.getId() == listId)
+            {
+                rv = list;
+                break;
+            }
+        }
+        
+        return rv;
+    }
+    
+    @Override
     public void fetchItems(int listId)
     {
         itemData.clear();

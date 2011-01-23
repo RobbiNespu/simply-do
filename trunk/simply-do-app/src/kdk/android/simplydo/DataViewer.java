@@ -28,6 +28,7 @@ public interface DataViewer
     public void setSelectedList(ListDesc selectedList);
     public ListDesc getSelectedList();
     public void fetchLists();
+    public ListDesc fetchList(int listId);
     public void fetchItems(int listId);
     public void updateItemActiveness(ItemDesc item, boolean active);
     public void updateItemStarness(ItemDesc item, boolean star);
