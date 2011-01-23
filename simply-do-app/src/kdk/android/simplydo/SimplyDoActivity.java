@@ -98,9 +98,9 @@ public class SimplyDoActivity extends Activity
     @Override
     public void onCreate(Bundle savedInstanceState) 
     {
-        super.onCreate(savedInstanceState);
+        Log.v(L.TAG, "SimplyDoActivity.onCreate() called");
         
-        Log.v(L.TAG, "onCreate called");
+        super.onCreate(savedInstanceState);
         
         setContentView(R.layout.main);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -253,16 +253,24 @@ public class SimplyDoActivity extends Activity
         
         if (savedInstanceState==null) 
         {
-            Log.d(L.TAG, "onCreate()");
+            Log.d(L.TAG, "SimplyDoActivity.onCreate()");
         }
         else 
         {
-            Log.d(L.TAG, "onCreate() with a supplied state");
+            Log.d(L.TAG, "SimplyDoActivity.onCreate() with a supplied state");
             
-            ListDesc listDesc = (ListDesc)savedInstanceState.getSerializable("currentList");
-            if(listDesc != null)
+            Integer listId = (Integer)savedInstanceState.getSerializable("currentListId");
+            if(listId != null)
             {
-                listSelected(listDesc, false);
+                ListDesc listDesc = dataViewer.fetchList(listId);
+                if(listDesc != null)
+                {
+                    listSelected(listDesc, false);
+                }
+                else
+                {
+                    Log.w(L.TAG, "SimplyDoActivity.onCreate(): savedInstanceState had bad list ID");
+                }
             }
         }
         
@@ -281,7 +289,7 @@ public class SimplyDoActivity extends Activity
     
     public void cacheInvalidated()
     {
-        Log.v(L.TAG, "Entered cacheInvalidated()");
+        Log.v(L.TAG, "SimplyDoActivity.cacheInvalidated(): Entered");
         
         ViewSwitcher viewSwitch = (ViewSwitcher)findViewById(R.id.ListsItemsSwitcher);
         int displayed = viewSwitch.getDisplayedChild();
@@ -298,14 +306,14 @@ public class SimplyDoActivity extends Activity
     @Override
     protected void onStart()
     {
-        super.onStart();
+        Log.v(L.TAG, "SimplyDoActivity.onStart(): called");
         
-        Log.v(L.TAG, "onStart called");
+        super.onStart();
         
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         
         String itemSort = prefs.getString("itemSorting", ItemListSorter.PREF_ACTIVE_STARRED);
-        Log.v(L.TAG, "itemSort = " + itemSort);
+        //Log.v(L.TAG, "itemSort = " + itemSort);
         
         itemListSorter.setSortingMode(itemSort);
         itemListSorter.sort(dataViewer.getItemData());
@@ -313,7 +321,7 @@ public class SimplyDoActivity extends Activity
         
         String listSort = prefs.getString("listSorting", ListListSorter.PREF_ALPHA);
         listListSorter.setSortingMode(listSort);
-        Log.v(L.TAG, "listSort = " + listSort);
+        //Log.v(L.TAG, "listSort = " + listSort);
         
         listListSorter.sort(dataViewer.getListData());
         listPropertiesAdapter.notifyDataSetChanged();
@@ -323,18 +331,28 @@ public class SimplyDoActivity extends Activity
     @Override
     protected void onSaveInstanceState(Bundle outState)
     {
-        super.onSaveInstanceState(outState);
-        Log.v(L.TAG, "onSaveInstanceState() called");
+        Log.v(L.TAG, "SimplyDoActivity.onSaveInstanceState() called");
         
-        outState.putSerializable("currentList", dataViewer.getSelectedList());
+        super.onSaveInstanceState(outState);
+        
+        ListDesc selectedList = dataViewer.getSelectedList();
+        if(selectedList != null)
+        {
+            outState.putSerializable("currentListId", (Integer)selectedList.getId());
+        }
+        else
+        {
+            outState.putSerializable("currentListId", null);
+        }
     }
 
 
     @Override
     protected void onDestroy()
     {
+        Log.v(L.TAG, "SimplyDoActivity.onDestroy() called");
+        
         super.onDestroy();
-        Log.v(L.TAG, "onDestroy() called");
         
         dataViewer.close();
         
@@ -345,7 +363,7 @@ public class SimplyDoActivity extends Activity
     @Override
     public void onBackPressed()
     {
-        Log.v(L.TAG, "onBackPressed() called");
+        Log.v(L.TAG, "SimplyDoActivity.onBackPressed() called");
         
         ViewSwitcher viewSwitch = (ViewSwitcher)findViewById(R.id.ListsItemsSwitcher);
         int displayed = viewSwitch.getDisplayedChild();
@@ -367,7 +385,7 @@ public class SimplyDoActivity extends Activity
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        Log.v(L.TAG, "onCreateOptionsMenu() called");
+        Log.v(L.TAG, "SimplyDoActivity.onCreateOptionsMenu() called");
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -375,7 +393,7 @@ public class SimplyDoActivity extends Activity
     @Override
     public boolean onPrepareOptionsMenu(Menu menu)
     {
-        Log.v(L.TAG, "onPrepareOptionsMenu() called");
+        Log.v(L.TAG, "SimplyDoActivity.onPrepareOptionsMenu() called");
         
         menu.clear();
         ViewSwitcher viewSwitch = (ViewSwitcher)findViewById(R.id.ListsItemsSwitcher);
@@ -404,7 +422,7 @@ public class SimplyDoActivity extends Activity
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item)
     {
-        Log.v(L.TAG, "onMenuItemSelected() called");
+        Log.v(L.TAG, "SimplyDoActivity.onMenuItemSelected() called");
         
         switch(item.getItemId())
         {
@@ -491,52 +509,62 @@ public class SimplyDoActivity extends Activity
     @Override
     protected Dialog onCreateDialog(int id)
     {
-        Log.v(L.TAG, "onCreateDialog() called");
+        Log.v(L.TAG, "SimplyDoActivity.onCreateDialog(): Entered");
+        
+        Dialog dialog = null;
                 
         switch(id)
         {
             case DIALOG_LIST_DELETE:
             {
-                AlertDialog dialog = listDeleteBuilder.create();
-                return dialog;
+                dialog = listDeleteBuilder.create();
+                break;
             }
             case DIALOG_ITEM_DELETE:
             {
-                AlertDialog dialog = itemDeleteBuilder.create();
-                return dialog;
+                dialog = itemDeleteBuilder.create();
+                break;
             }
             case DIALOG_ITEM_EDIT:
             {
                 AlertDialog editDialog = itemEditBuilder.create();
                 editDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-                return editDialog;
+                dialog = editDialog;
+                break;
             }
             case DIALOG_LIST_EDIT:
             {
                 AlertDialog editDialog = listEditBuilder.create();
                 editDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-                return editDialog;
+                dialog = editDialog;
+                break;
             }
             case DIALOG_ITEM_MOVE:
             {
-                return moveItemToAction.createDialog();
+                dialog = moveItemToAction.createDialog();
+                break;
             }
             case DIALOG_DELETE_INACTIVE:
             {
-                return deleteInactiveAction.createDialog();
+                dialog = deleteInactiveAction.createDialog();
+                break;
             }
         }
         
-        return super.onCreateDialog(id);
+        if(dialog == null)
+        {
+            dialog = super.onCreateDialog(id);
+        }
+        
+        Log.v(L.TAG, "SimplyDoActivity.onCreateDialog(): Exit");
+        return dialog;
     }
     
     
     @Override
     protected void onPrepareDialog(int id, Dialog dialog)
     {
-        super.onPrepareDialog(id, dialog);
-        
-        Log.v(L.TAG, "onPrepareDialog() called");
+        Log.v(L.TAG, "SimplyDoActivity.onPrepareDialog(): Entered");
         
         switch(id)
         {
@@ -570,8 +598,12 @@ public class SimplyDoActivity extends Activity
                 Log.e(L.TAG, "onPrepareDialog()/DIALOG_ITEM_MOVE called for nonexistant item");
             }
             break;
+        default:
+            super.onPrepareDialog(id, dialog);
+            break;
         }
 
+        Log.v(L.TAG, "SimplyDoActivity.onPrepareDialog(): Exit");
     }
     
     
@@ -641,7 +673,6 @@ public class SimplyDoActivity extends Activity
             if(currentList != null)
             {
                 dataViewer.createItem(txtTrim);
-                //itemListSorter.sort(dataViewer.getItemData());
                 itemPropertiesAdapter.notifyDataSetChanged();
                 listPropertiesAdapter.notifyDataSetChanged();
                 editText.getText().clear();

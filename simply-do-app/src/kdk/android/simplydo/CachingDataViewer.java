@@ -26,8 +26,9 @@ import java.util.List;
 import android.util.Log;
 
 /**
- * A cache of the database data which does the actual db calls lazily on
- * a separate thread.
+ * A cache of the database data which does the actual database calls lazily on
+ * a separate thread. On my device a database write take 300ms-450ms which is
+ * too log to hang onto the UI thread for.
  */
 public class CachingDataViewer implements DataViewer
 {
@@ -39,7 +40,11 @@ public class CachingDataViewer implements DataViewer
     private Thread dbUpdateThread;
     private Object viewerLock = new Object();
     private LinkedList<ViewerTask> taskQueue = new LinkedList<ViewerTask>();
-    private boolean running = false;
+
+    // declared volatile since it is accessed in the db thread
+    // without holding the viewerLock
+    private volatile boolean running = false;
+    
     private boolean interruptRequire = false;
     private ListDesc selectedList;
 
@@ -66,20 +71,23 @@ public class CachingDataViewer implements DataViewer
         dbUpdateThread.start();
     }
     
+    @Override
     public void invalidateCache()
     {
         setSelectedList(null);
         fetchLists();
     }
     
+    @Override
     public void flush()
     {
         flushTasks();
     }
     
+    @Override
     public void close()
     {
-        Log.d(L.TAG, "Entered CachingDataView.close()");
+        Log.v(L.TAG, "CachingDataView.close(): Entered");
         synchronized (viewerLock)
         {
             flushTasksNoLock();
@@ -88,7 +96,7 @@ public class CachingDataViewer implements DataViewer
             
             if(interruptRequire)
             {
-                Log.d(L.TAG, "Close interrupt required");
+                Log.d(L.TAG, "CachingDataView.close(): Close interrupt required");
                 dbUpdateThread.interrupt();
             }
         }        
@@ -99,13 +107,14 @@ public class CachingDataViewer implements DataViewer
         }
         catch (InterruptedException e)
         {
-            Log.d(L.TAG, "shutdown join interrupted", e);
+            Log.d(L.TAG, "CachingDataView.close(): shutdown join interrupted", e);
         }
         
-        Log.d(L.TAG, "Exited CachingDataView.close()");
+        Log.v(L.TAG, "CachingDataView.close(): Exit");
     }
 
 
+    @Override
     public List<ItemDesc> getItemData()
     {
         synchronized (viewerLock)
@@ -115,6 +124,7 @@ public class CachingDataViewer implements DataViewer
     }
 
     
+    @Override
     public List<ListDesc> getListData()
     {
         synchronized (viewerLock)
@@ -138,39 +148,56 @@ public class CachingDataViewer implements DataViewer
         
         // this is ok since this thread is the only source
         // of task and we've just flushed the task queue
+        itemData.clear();
         if(selectedList != null)
         {
-            itemData.clear();
             dataManager.fetchItems(selectedList.getId(), itemData);
         }
-        else
-        {
-            itemData.clear();
-        }
+        
         this.selectedList = selectedList;
     }
 
 
+    @Override
     public void fetchLists()
     {
-        Log.v(L.TAG, "Entered fetchLists()");
+        Log.v(L.TAG, "CachingDataView.fetchLists(): Entered");
         ViewerTask task = new ViewerTask();
         task.taskId = ViewerTask.FETCH_LISTS;
         doTaskAndWait(task);
-        Log.v(L.TAG, "Exited fetchLists()");
+        Log.v(L.TAG, "CachingDataView.fetchLists(): Exited");
+    }
+    
+    public ListDesc fetchList(int listId)
+    {
+        ListDesc rv = null;
+        
+        synchronized (viewerLock)
+        {
+            for(ListDesc list : listData)
+            {
+                if(listId == list.getId())
+                {
+                    rv = list;
+                    break;
+                }
+            }
+        }
+
+        return rv;
     }
 
     
+    @Override
     public void fetchItems(int listId)
     {
-        Log.v(L.TAG, "Entered fetchItems()");
+        Log.v(L.TAG, "CachingDataViewer.fetchItems(): Entered");
         ViewerTask task = new ViewerTask();
         task.taskId = ViewerTask.FETCH_ITEMS;
         task.args = new Object[]{listId};
         doTaskAndWait(task);
-        Log.v(L.TAG, "Exited fetchItems()");
+        Log.v(L.TAG, "CachingDataViewer.fetchItems(): Exited");
     }
-    
     
 
     @Override
@@ -178,7 +205,7 @@ public class CachingDataViewer implements DataViewer
     {
         if(selectedList == null)
         {
-            Log.e(L.TAG, "createItem() called but no list is selected");
+            Log.e(L.TAG, "CachingDataViewer.createItem(): called but no list is selected");
             return;
         }
         
@@ -230,7 +257,7 @@ public class CachingDataViewer implements DataViewer
     {
         if(selectedList == null)
         {
-            Log.e(L.TAG, "deleteInactive() called but no list is selected");
+            Log.e(L.TAG, "CachingDataViewer.deleteInactive() called but no list is selected");
             return;
         }
         
@@ -278,16 +305,7 @@ public class CachingDataViewer implements DataViewer
             viewerLock.notifyAll();
             
             // update items data
-            ItemDesc delete = null;
-            for(ItemDesc i : itemData)
-            {
-                if(itemId == i.getId())
-                {
-                    delete = i;
-                    break;
-                }
-            }
-            itemData.remove(delete);
+            itemData.remove(item);
             updateListStats();
         }
     }
@@ -306,13 +324,13 @@ public class CachingDataViewer implements DataViewer
             taskQueue.add(task);
             viewerLock.notifyAll();
             
-            // update items data
+            // update lists data
             ListDesc delete = null;
-            for(ListDesc i : listData)
+            for(ListDesc list : listData)
             {
-                if(listId == i.getId())
+                if(listId == list.getId())
                 {
-                    delete = i;
+                    delete = list;
                     break;
                 }
             }
@@ -339,14 +357,7 @@ public class CachingDataViewer implements DataViewer
             viewerLock.notifyAll();
             
             // update items data
-            for(ItemDesc i : itemData)
-            {
-                if(itemId == i.getId())
-                {
-                    i.setLabel(newLabel);
-                    break;
-                }
-            }
+            item.setLabel(newLabel);
         }        
     }
 
@@ -390,7 +401,7 @@ public class CachingDataViewer implements DataViewer
             }
             else
             {
-                Log.w(L.TAG, "moveItem(): Didn't find item in current item data");
+                Log.w(L.TAG, "CachingDataViewer.moveItem(): Didn't find item in current item data");
             }
         }        
     }
@@ -422,6 +433,7 @@ public class CachingDataViewer implements DataViewer
     }
     
 
+    @Override
     public void updateItemActiveness(ItemDesc item, boolean active)
     {
         itemIdBarrier(item);
@@ -438,26 +450,20 @@ public class CachingDataViewer implements DataViewer
             viewerLock.notifyAll();
             
             // update items data
-            for(ItemDesc i : itemData)
-            {
-                if(itemId == i.getId())
-                {
-                    i.setActive(active);
-                    break;
-                }
-            }
+            item.setActive(active);
             
             // update lists data
             if(selectedList != null)
             {
-                int inactive = selectedList.getActiveItems();
-                inactive += active?1:-1;
-                selectedList.setActiveItems(inactive);
+                int activeItems = selectedList.getActiveItems();
+                activeItems += active?1:-1;
+                selectedList.setActiveItems(activeItems);
             }
         }
     }
     
 
+    @Override
     public void updateItemStarness(ItemDesc item, boolean star)
     {
         itemIdBarrier(item);
@@ -474,14 +480,7 @@ public class CachingDataViewer implements DataViewer
             viewerLock.notifyAll();
             
             // update items data
-            for(ItemDesc i : itemData)
-            {
-                if(itemId == i.getId())
-                {
-                    i.setStar(star);
-                    break;
-                }
-            }
+            item.setStar(star);
         }
     }
     
@@ -507,11 +506,11 @@ public class CachingDataViewer implements DataViewer
         {
             try
             {
-                viewerLock.wait(300);
+                viewerLock.wait(200);
             }
             catch (InterruptedException e)
             {
-                Log.e(L.TAG, "Exception waiting for flushTasks()", e);
+                Log.e(L.TAG, "CachingDataViewer.flushTasksNoLock(): Exception waiting for flushTasksNoLock()", e);
             }
         }
     }
@@ -544,6 +543,7 @@ public class CachingDataViewer implements DataViewer
         return rvList;
     }
     
+    
     private void updateListStats(ListDesc listDesc)
     {
         listDesc.setTotalItems(itemData.size());
@@ -557,6 +557,7 @@ public class CachingDataViewer implements DataViewer
         }
         listDesc.setActiveItems(active);
     }
+    
     
     private void doTaskAndWait(ViewerTask task)
     {
@@ -574,7 +575,7 @@ public class CachingDataViewer implements DataViewer
             }
             catch(InterruptedException e)
             {
-                Log.e(L.TAG, "Error waiting for task", e);
+                Log.e(L.TAG, "CachingDataViewer.doTaskAndWait(): Error waiting for task", e);
             }
         }
     }
@@ -582,7 +583,7 @@ public class CachingDataViewer implements DataViewer
     
     private void dbUpdateLoop()
     {
-        Log.v(L.TAG, "Entered dbUpdateLoop()");
+        Log.v(L.TAG, "CachingDataViewer.dbUpdateLoop(): Entered");
         while(running)
         {
             try
@@ -693,7 +694,7 @@ public class CachingDataViewer implements DataViewer
                         break;
                     }
                     default:
-                        Log.w(L.TAG, "Unknown task enumeration " + task.taskId);
+                        Log.w(L.TAG, "CachingDataViewer.dbUpdateLoop(): Unknown task enumeration " + task.taskId);
                     }
                 }
                 finally
@@ -712,19 +713,19 @@ public class CachingDataViewer implements DataViewer
             {
                 if(running)
                 {
-                    Log.e(L.TAG, "Exception in DB update loop", e);
+                    Log.e(L.TAG, "CachingDataViewer.dbUpdateLoop(): Interrupted in DB update loop", e);
                 }
                 else
                 {
-                    Log.d(L.TAG, "dbUpdateLoop() interrupt exit");
+                    Log.d(L.TAG, "CachingDataViewer.dbUpdateLoop(): interrupt exit");
                 }
             }
             catch(Exception e)
             {
-                Log.e(L.TAG, "Exception in DB update loop", e);
+                Log.e(L.TAG, "CachingDataViewer.dbUpdateLoop(): Exception in DB update loop", e);
             }
         }
-        Log.v(L.TAG, "Exited dbUpdateLoop()");
+        Log.v(L.TAG, "CachingDataViewer.dbUpdateLoop(): Exit");
     }
     
     
