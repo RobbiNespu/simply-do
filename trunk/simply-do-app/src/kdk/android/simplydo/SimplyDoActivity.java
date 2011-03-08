@@ -81,8 +81,12 @@ public class SimplyDoActivity extends Activity
     
     private AlertDialog.Builder itemDeleteBuilder;
     private AlertDialog.Builder listDeleteBuilder;
-    private AlertDialog.Builder itemEditBuilder;
+    
     private AlertDialog.Builder listEditBuilder;
+    private AlertDialog listEditDialog;
+    
+    private AlertDialog.Builder itemEditBuilder;
+    private AlertDialog itemEditDialog;
     
     private EditText itemEditView;
     private EditText listEditView;
@@ -207,8 +211,6 @@ public class SimplyDoActivity extends Activity
         LayoutInflater inflater = (LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
         
         View itemEditLayout = inflater.inflate(R.layout.item_edit, (ViewGroup)findViewById(R.id.item_edit_root));
-
-        itemEditView = (EditText)itemEditLayout.findViewById(R.id.EditItemLabelEditText);
         
         itemEditBuilder = new AlertDialog.Builder(this);
         itemEditBuilder.setView(itemEditLayout)
@@ -220,11 +222,27 @@ public class SimplyDoActivity extends Activity
                 }
             })
             .setNegativeButton("Cancel", null);
+
+        itemEditView = (EditText)itemEditLayout.findViewById(R.id.EditItemLabelEditText);
+        itemEditView.setOnEditorActionListener(new OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+            {
+                if(itemEditDialog != null)
+                {
+                    itemEditOk();
+                    itemEditDialog.cancel();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        });
         
         View listEditLayout = inflater.inflate(R.layout.list_edit, (ViewGroup)findViewById(R.id.list_edit_root));
 
-        listEditView = (EditText)listEditLayout.findViewById(R.id.EditListLabelEditText);
-        
         listEditBuilder = new AlertDialog.Builder(this);
         listEditBuilder.setView(listEditLayout)
             .setCancelable(true)
@@ -236,6 +254,24 @@ public class SimplyDoActivity extends Activity
             })
             .setNegativeButton("Cancel", null);
                 
+        listEditView = (EditText)listEditLayout.findViewById(R.id.EditListLabelEditText);
+        listEditView.setOnEditorActionListener(new OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+            {
+                if(listEditDialog != null)
+                {
+                    listEditOk();
+                    listEditDialog.cancel();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        });
+        
         dataViewer.fetchLists();
         listPropertiesAdapter.notifyDataSetChanged();
         
@@ -527,16 +563,16 @@ public class SimplyDoActivity extends Activity
             }
             case DIALOG_ITEM_EDIT:
             {
-                AlertDialog editDialog = itemEditBuilder.create();
-                editDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-                dialog = editDialog;
+                itemEditDialog = itemEditBuilder.create();
+                itemEditDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                dialog = itemEditDialog;
                 break;
             }
             case DIALOG_LIST_EDIT:
             {
-                AlertDialog editDialog = listEditBuilder.create();
-                editDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-                dialog = editDialog;
+                listEditDialog = listEditBuilder.create();
+                listEditDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                dialog = listEditDialog;
                 break;
             }
             case DIALOG_ITEM_MOVE:
