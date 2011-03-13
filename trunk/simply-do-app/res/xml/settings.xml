@@ -13,7 +13,7 @@
   		android:entries="@array/listSortingEntries"
         android:entryValues="@array/listSortingValues" >
   </ListPreference>
-  <CheckBoxPreference android:title="Confirm Delete Inactive" android:key="confirmDeleteInactive" android:defaultValue="true"></CheckBoxPreference><Preference android:title="Backup" android:key="backupDb">
+  <CheckBoxPreference android:title="Confirm Delete Inactive" android:key="confirmDeleteInactive" android:defaultValue="true"></CheckBoxPreference><Preference android:key="backupDb" android:title="Backup Now">
   </Preference>
 <Preference android:title="Restore" android:key="restoreDb"></Preference>
 
