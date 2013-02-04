@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Keith Kildare
+ * Copyright (C) 2013 Keith Kildare
  * 
  * This file is part of SimplyDo.
  * 
@@ -84,10 +84,10 @@ public class MoveToAction
         aa = new ArrayAdapter<String>(context, android.R.layout.select_dialog_singlechoice);
         
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Move To");
+        builder.setTitle(R.string.moveToTitle);
         builder.setSingleChoiceItems(aa, -1, itemClickedListener);
-        builder.setPositiveButton("OK", listSelectedListener);
-        builder.setNegativeButton("Cancel", cancelClickedListener);
+        builder.setPositiveButton(R.string.moveToPositive, listSelectedListener);
+        builder.setNegativeButton(R.string.moveToNegative, cancelClickedListener);
         builder.setCancelable(true);
         
         AlertDialog alertDialog = builder.create();
