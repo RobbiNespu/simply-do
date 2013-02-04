@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Keith Kildare
+ * Copyright (C) 2013 Keith Kildare
  * 
  * This file is part of SimplyDo.
  * 
@@ -80,16 +80,16 @@ public class RestoreActivity extends ListActivity
         setListAdapter(adapter);
         
         restoreWarningBuilder = new AlertDialog.Builder(this);
-        restoreWarningBuilder.setMessage("This will overwrite all the existing lists and items. Continue?")
+        restoreWarningBuilder.setMessage(R.string.restoreWarnMessage)
                .setCancelable(true)
-               .setTitle("Restore database")
-               .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+               .setTitle(R.string.restoreWarnTitle)
+               .setPositiveButton(R.string.restoreWarnPositive, new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
                        doRestore();
                        dialog.cancel();
                    }
                })
-               .setNegativeButton("No", new DialogInterface.OnClickListener() {
+               .setNegativeButton(R.string.restoreWarnNegative, new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                    }
@@ -137,7 +137,7 @@ public class RestoreActivity extends ListActivity
         catch(Exception e)
         {
             Log.e(L.TAG, "Error testing user selected restore DB", e);
-            Toast t = Toast.makeText(this, "That database was invalid or corrupted! Not restored.", Toast.LENGTH_LONG);
+            Toast t = Toast.makeText(this, R.string.restoreToastInvalidDB, Toast.LENGTH_LONG);
             t.show();
         }
         
@@ -172,7 +172,7 @@ public class RestoreActivity extends ListActivity
         {
             Toast.makeText(
                     this, 
-                    "Media not mount or read-only", 
+                    R.string.restoreToastMountProblem, 
                     Toast.LENGTH_LONG
                     ).show();
             return;
@@ -186,7 +186,7 @@ public class RestoreActivity extends ListActivity
         {
             Toast.makeText(
                     this, 
-                    "Unable to move old database out of the way.", 
+                    R.string.restoreToastUnableToMove, 
                     Toast.LENGTH_LONG
                     ).show();
             return;
@@ -206,11 +206,11 @@ public class RestoreActivity extends ListActivity
             dbFile.delete();
             dbBakFile.renameTo(dbFile);
             
-            Log.e(L.TAG, "Failed to copy restore database into place", e);
+            Log.e(L.TAG,  "Failed to copy restore database into place", e);
             
             Toast.makeText(
                     this, 
-                    "Failed to copy restore database into place. Nothing restored.", 
+                    R.string.restoreToastCopyFailed, 
                     Toast.LENGTH_LONG
                     ).show();
             return;
@@ -221,7 +221,7 @@ public class RestoreActivity extends ListActivity
         
         Toast.makeText(
                 this, 
-                "Database restored.", 
+                R.string.restoreToastRestoreFinished, 
                 Toast.LENGTH_LONG
                 ).show();
         

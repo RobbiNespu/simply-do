@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Keith Kildare
+ * Copyright (C) 2013 Keith Kildare
  * 
  * This file is part of SimplyDo.
  * 
@@ -47,15 +47,15 @@ public class DeleteInactiveAction
         this.itemPropertiesAdapter = itemPropertiesAdapter;
         
         dialogBuilder = new AlertDialog.Builder(this.activity);
-        dialogBuilder.setMessage("Are you sure you want to delete all inactive items in this list?")
+        dialogBuilder.setMessage(R.string.deleteInactiveMessage)
                .setCancelable(true)
-               .setTitle("Delete Inactive?")
-               .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+               .setTitle(R.string.deleteInactiveTitle)
+               .setPositiveButton(R.string.deleteInactivePositive, new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
                        deleteInactive();
                    }
                })
-               .setNegativeButton("No", null);
+               .setNegativeButton(R.string.deleteInactiveNegative, null);
     }
 
     public void deleteInactive(int dialogId)

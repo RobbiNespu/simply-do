@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 Keith Kildare
+ * Copyright (C) 2013 Keith Kildare
  * 
  * This file is part of SimplyDo.
  * 
@@ -106,13 +106,13 @@ public class SettingsActivity extends PreferenceActivity
         else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) 
         {
             // We can only read the media and we need to write
-            Toast t = Toast.makeText(this, "Storage media is read-only", Toast.LENGTH_LONG);
+            Toast t = Toast.makeText(this, R.string.settingsMediaReadOnly, Toast.LENGTH_LONG);
             t.show();            
         }
         else 
         {
             // Something else is wrong.
-            Toast t = Toast.makeText(this, "Unable to access storage media. Not mounted?", Toast.LENGTH_LONG);
+            Toast t = Toast.makeText(this, R.string.settingsMediaNoMount, Toast.LENGTH_LONG);
             t.show();            
         }
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010, 2011 Keith Kildare
+ * Copyright (C) 2013, 2011 Keith Kildare
  * 
  * This file is part of SimplyDo.
  * 
@@ -155,16 +155,16 @@ public class SimplyDoActivity extends Activity
                 android.R.anim.slide_out_right));
         
         listDeleteBuilder = new AlertDialog.Builder(this);
-        listDeleteBuilder.setMessage("Are you sure you want to delete this list?")
+        listDeleteBuilder.setMessage(R.string.listDeleteMessage)
                .setCancelable(true)
-               .setTitle("Delete?")
-               .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+               .setTitle(R.string.listDeleteTitle)
+               .setPositiveButton(R.string.listDeletePositive, new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
                        contextDeleteList();
                        dialog.cancel();
                    }
                })
-               .setNegativeButton("No", new DialogInterface.OnClickListener() {
+               .setNegativeButton(R.string.listDeleteNegative, new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                    }
@@ -172,16 +172,16 @@ public class SimplyDoActivity extends Activity
         
         itemDeleteBuilder = new AlertDialog.Builder(this);
         itemDeleteBuilder.setMessage(
-                "This item is still active. Are you sure you want to delete it?")
+                R.string.itemDeleteMessage)
                .setCancelable(true)
-               .setTitle("Delete?")
-               .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+               .setTitle(R.string.itemDeleteTitle)
+               .setPositiveButton(R.string.itemDeletePositive, new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
                        contextDeleteItem();
                        dialog.cancel();
                    }
                })
-               .setNegativeButton("No", new DialogInterface.OnClickListener() {
+               .setNegativeButton(R.string.itemDeleteNegative, new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                    }
@@ -215,13 +215,13 @@ public class SimplyDoActivity extends Activity
         itemEditBuilder = new AlertDialog.Builder(this);
         itemEditBuilder.setView(itemEditLayout)
             .setCancelable(true)
-            .setTitle("Edit Item Label")
-            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            .setTitle(R.string.itemEditTitle)
+            .setPositiveButton(R.string.itemEditPositive, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     itemEditOk();
                 }
             })
-            .setNegativeButton("Cancel", null);
+            .setNegativeButton(R.string.itemEditNegative, null);
 
         itemEditView = (EditText)itemEditLayout.findViewById(R.id.EditItemLabelEditText);
         itemEditView.setOnEditorActionListener(new OnEditorActionListener() {
@@ -246,13 +246,13 @@ public class SimplyDoActivity extends Activity
         listEditBuilder = new AlertDialog.Builder(this);
         listEditBuilder.setView(listEditLayout)
             .setCancelable(true)
-            .setTitle("Edit List Label")
-            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            .setTitle(R.string.listEditTitle)
+            .setPositiveButton(R.string.listEditPositive, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     listEditOk();
                 }
             })
-            .setNegativeButton("Cancel", null);
+            .setNegativeButton(R.string.listEditNegative, null);
                 
         listEditView = (EditText)listEditLayout.findViewById(R.id.EditListLabelEditText);
         listEditView.setOnEditorActionListener(new OnEditorActionListener() {
@@ -437,16 +437,16 @@ public class SimplyDoActivity extends Activity
         
         if(isItemDisplay)
         {
-            MenuItem deleteInactiveMI = menu.add(Menu.NONE, DELETE_INACTIVE, Menu.NONE, "Delete Inactive");
+            MenuItem deleteInactiveMI = menu.add(Menu.NONE, DELETE_INACTIVE, Menu.NONE, R.string.optionsMenuDeleteInactive);
             deleteInactiveMI.setIcon(android.R.drawable.ic_menu_delete);
         }
         
-        MenuItem settingsMI = menu.add(Menu.NONE, SETTINGS, Menu.NONE, "Settings");
+        MenuItem settingsMI = menu.add(Menu.NONE, SETTINGS, Menu.NONE, R.string.optionsMenuSettings);
         settingsMI.setIcon(android.R.drawable.ic_menu_preferences);
         
         if(isItemDisplay)
         {
-            MenuItem sortNowMI = menu.add(Menu.NONE, SORT_NOW, Menu.NONE, "Sort Now");
+            MenuItem sortNowMI = menu.add(Menu.NONE, SORT_NOW, Menu.NONE, R.string.optionsMenuSort);
             sortNowMI.setIcon(android.R.drawable.ic_menu_sort_by_size);
         }
         
@@ -780,22 +780,22 @@ public class SimplyDoActivity extends Activity
             ListView listView = (ListView)findViewById(R.id.ItemsListView);
             ctxItem = (ItemDesc)listView.getItemAtPosition(ctxMenuInfo.position);
 
-            menu.setHeaderTitle("Item Options");
-            menu.add(Menu.NONE, EDIT_ITEM, Menu.NONE, "Edit");
-            menu.add(Menu.NONE, DELETE_ITEM, Menu.NONE, "Delete");
-            String toggleText;
+            menu.setHeaderTitle(R.string.itemOptionsTitle);
+            menu.add(Menu.NONE, EDIT_ITEM, Menu.NONE, R.string.itemOptionsEdit);
+            menu.add(Menu.NONE, DELETE_ITEM, Menu.NONE, R.string.itemOptionsDelete);
+            int toggleText;
             if(ctxItem.isStar())
             {
-                toggleText = "Remove Star";
+                toggleText = R.string.itemOptionsRemoveStar;
             }
             else
             {
-                toggleText = "Add Star";
+                toggleText = R.string.itemOptionsAddStar;
             }
             menu.add(Menu.NONE, TOGGLE_STAR, Menu.NONE, toggleText);
             if(dataViewer.getListData().size() > 1)
             {
-                menu.add(Menu.NONE, MOVE_ITEM, Menu.NONE, "Move To");
+                menu.add(Menu.NONE, MOVE_ITEM, Menu.NONE, R.string.itemOptionsMoveTo);
             }
         }
 
@@ -836,9 +836,9 @@ public class SimplyDoActivity extends Activity
             ListView listView = (ListView)findViewById(R.id.ListsListView);
             ctxList = (ListDesc)listView.getItemAtPosition(ctxMenuInfo.position);
 
-            menu.setHeaderTitle("List Options");
-            menu.add(Menu.NONE, EDIT_LIST, Menu.NONE, "Edit");
-            menu.add(Menu.NONE, DELETE_LIST, Menu.NONE, "Delete");
+            menu.setHeaderTitle(R.string.listOptionsTitle);
+            menu.add(Menu.NONE, EDIT_LIST, Menu.NONE, R.string.listOptionsEdit);
+            menu.add(Menu.NONE, DELETE_LIST, Menu.NONE, R.string.listOptionsDelete);
         }
     
     }
