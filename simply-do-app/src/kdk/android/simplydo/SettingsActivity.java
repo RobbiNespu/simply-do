@@ -125,13 +125,15 @@ public class SettingsActivity extends PreferenceActivity
             SimplyDoActivity.getInstance().getDataVeiwer().flush();
             
             fileCopy(src, dst);
-            Toast t = Toast.makeText(this, "Backed up to " + dst.getName(), Toast.LENGTH_SHORT);
+            String backedUpTo = String.format(getString(R.string.settingsBackedUp), dst.getName());
+            Toast t = Toast.makeText(this, backedUpTo, Toast.LENGTH_SHORT);
             t.show();
         }
         catch (IOException e)
         {
             Log.d(L.TAG, "Failed to copy files: " + e.getMessage(), e);
-            Toast t = Toast.makeText(this, "Backup failed: " + e.getMessage(), Toast.LENGTH_SHORT);
+            String backUpFailed = String.format(getString(R.string.settingsBackUpFailed), e.getMessage());
+            Toast t = Toast.makeText(this, backUpFailed, Toast.LENGTH_SHORT);
             t.show();
         }
     }
