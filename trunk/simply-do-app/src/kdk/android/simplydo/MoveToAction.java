@@ -157,7 +157,8 @@ public class MoveToAction
         itemPropertiesAdapter.notifyDataSetChanged();
         listPropertiesAdapter.notifyDataSetChanged();
         
-        Toast t = Toast.makeText(context, "Item " + ctxItem.getLabel() + " moved to " + listDesc.getLabel(), Toast.LENGTH_SHORT);
+        String itemMoved = String.format(context.getString(R.string.moveToMoved), ctxItem.getLabel(), listDesc.getLabel());
+        Toast t = Toast.makeText(context, itemMoved, Toast.LENGTH_SHORT);
         t.show();
         
         endDialog();
