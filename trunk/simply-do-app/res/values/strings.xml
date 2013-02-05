@@ -81,4 +81,9 @@
 <string name="listOptionsTitle">List Options</string>
 <string name="listOptionsEdit">Edit</string>
 <string name="listOptionsDelete">Delete</string>
+
+<string name="addItemButton">Add</string>
+<string name="addItemHint">New Item Name</string>
+<string name="addListButton">Add</string>
+<string name="addListHint">New List Name</string>
 </resources>
