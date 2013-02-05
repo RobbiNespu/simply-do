@@ -43,6 +43,11 @@
 <string name="settingsMediaNoMount">Unable to access storage media. Not mounted?</string>
 <string name="settingsBackedUp">Backed up to %1$s</string>
 <string name="settingsBackUpFailed">Backup failed: %1$s</string>
+<string name="settingsItemSorting">Item Sorting</string>
+<string name="settingsListSorting">List Sorting</string>
+<string name="settingsConfirmDeleteInactive">Confirm Delete All Inactive</string>
+<string name="settingsBackupNow">Backup Now</string>
+<string name="settingsRestore">Restore</string>
 
 <string name="listDeleteTitle">Delete?</string>
 <string name="listDeleteMessage">Are you sure you want to delete this list?</string>
@@ -62,7 +67,7 @@
 <string name="listEditPositive">OK</string>
 <string name="listEditNegative">Cancel</string>
 
-<string name="optionsMenuDeleteInactive">Delete Inactive</string>
+<string name="optionsMenuDeleteInactive">Delete All Inactive</string>
 <string name="optionsMenuSettings">Settings</string>
 <string name="optionsMenuSort">Sort Now</string>
 
