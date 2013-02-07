@@ -2,18 +2,22 @@
 <resources>
 <string name="app_name">Simply Do</string>
 <string name="settings_title">Settings</string>
-<string-array name="itemSortingEntries"><item>None</item>
-<item>Starred</item>
-<item>Activity then Starred</item>
+<string-array name="itemSortingEntries">
+<item>None</item>
+<item>Starred First</item>
+<item>Active First</item>
 </string-array>
-<string-array name="itemSortingValues"><item>none</item>
+<string-array name="itemSortingValues">
+<item>none</item>
 <item>starred</item>
 <item>activityStarred</item>
 </string-array>
-<string-array name="listSortingEntries"><item>None</item>
+<string-array name="listSortingEntries">
+<item>None</item>
 <item>Alphabetical</item>
 </string-array>
-<string-array name="listSortingValues"><item>none</item>
+<string-array name="listSortingValues">
+<item>none</item>
 <item>alphabetical</item>
 </string-array>
 <string name="logtag">SimplyDo</string>
