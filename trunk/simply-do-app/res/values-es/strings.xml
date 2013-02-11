@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="app_name">Simply Do</string>
+<string name="settings_title">Configuración</string>
+
+<string-array name="itemSortingEntries">
+	<item>Ninguno</item>
+	<item>Los con estrellas, primero</item>
+	<item>Activos primero</item>
+</string-array>
+
+<string-array name="itemSortingValues">
+	<item>none</item>
+	<item>starred</item>
+	<item>activityStarred</item>
+</string-array>
+
+<string-array name="listSortingEntries">
+	<item>Ninguno</item>
+	<item>Alfabético</item>
+</string-array>
+
+<string-array name="listSortingValues">
+	<item>none</item>
+	<item>alphabetical</item>
+</string-array>
+
+<string name="logtag">SimplyDo</string>
+<string name="restore_title">Restaurar archivos</string>
+
+<string name="deleteInactiveTitle">¿Eliminar inactivos?</string>
+<string name="deleteInactiveMessage">¿Seguro que quieres eliminar todos los elementos inactivos de esta lista?</string>
+<string name="deleteInactivePositive">Sí</string>
+<string name="deleteInactiveNegative">No</string>
+
+<string name="moveToTitle">Mover a</string>
+<string name="moveToPositive">Aceptar</string>
+<string name="moveToNegative">Cancelar</string>
+<string name="moveToMoved">Elemento %1$s movido a %2$s</string>
+
+<string name="restoreWarnTitle">Restaurar base de datos</string>
+<string name="restoreWarnMessage">Vas a sobrescribir todas las listas y los elementos existentes. ¿Desea continuar?
+</string>
+<string name="restoreWarnPositive">Sí</string>
+<string name="restoreWarnNegative">No</string>
+<string name="restoreToastInvalidDB">La base de datos no es válido o está dañado! Error al restaurar.</string>
+<string name="restoreToastMountProblem">Media de sólo lectura o no montada</string>
+<string name="restoreToastUnableToMove">Error al remover la antigua base de datos.</string>
+<string name="restoreToastCopyFailed">Error al copiar la base de datos de restauración en su lugar. Nada restaurado.</string>
+<string name="restoreToastRestoreFinished">Restaurado la base de datos.</string>
+
+<string name="settingsMediaReadOnly">Medio de almacenamiento es de sólo lectura</string>
+<string name="settingsMediaNoMount">Error al acceder media. ¿No ha montado?</string>
+<string name="settingsBackedUp">Creada una copia de seguridad a %1$s</string>
+<string name="settingsBackUpFailed">Error de crear copia de seguridad: %1$s</string>
+<string name="settingsItemSorting">Orden de los elementos</string>
+<string name="settingsListSorting">Orden de la lista</string>
+<string name="settingsConfirmDeleteInactive">Confirmar antes de eliminar elementos inactivos</string>
+<string name="settingsBackupNow">Crear copia de seguridad ahora</string>
+<string name="settingsRestore">Restaurar</string>
+
+<string name="listDeleteTitle">¿Eliminar?</string>
+<string name="listDeleteMessage">¿Seguro que quieres eliminar esta lista?</string>
+<string name="listDeletePositive">Sí</string>
+<string name="listDeleteNegative">No</string>
+
+<string name="itemDeleteTitle">¿Eliminar?</string>
+<string name="itemDeleteMessage">Este elemento todavía esta activo.¿Seguro que quieres eliminarlo?</string>
+<string name="itemDeletePositive">Sí</string>
+<string name="itemDeleteNegative">No</string>
+
+<string name="itemEditTitle">Editar la etiqueta del elemento</string>
+<string name="itemEditPositive">Aceptar</string>
+<string name="itemEditNegative">Cancelar</string>
+
+<string name="listEditTitle">Editar la etiqueta de la lista</string>
+<string name="listEditPositive">Aceptar</string>
+<string name="listEditNegative">Cancelar</string>
+
+<string name="optionsMenuDeleteInactive">Borrar todos inactivos</string>
+<string name="optionsMenuSettings">Configuración</string>
+<string name="optionsMenuSort">Ordenar</string>
+
+<string name="itemOptionsTitle">Opciones del elemento</string>
+<string name="itemOptionsEdit">Editar</string>
+<string name="itemOptionsDelete">Eliminar</string>
+<string name="itemOptionsRemoveStar">Eliminar estrella</string>
+<string name="itemOptionsAddStar">Añadir estrella</string>
+<string name="itemOptionsMoveTo">Mover a</string>
+
+<string name="listOptionsTitle">Opciones de la lista</string>
+<string name="listOptionsEdit">Editar</string>
+<string name="listOptionsDelete">Eliminar</string>
+
+<string name="addItemButton">Añadir</string>
+<string name="addItemHint">Nombre de nuevo elemento</string>
+<string name="addListButton">Añadir</string>
+<string name="addListHint">Nombre de nueva lista</string>
+</resources>
