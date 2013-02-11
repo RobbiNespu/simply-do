@@ -149,13 +149,16 @@ public class RestoreActivity extends ListActivity
         File backupDirectory = new File(
                 Environment.getExternalStorageDirectory(), 
                 "/Android/data/kdk.android.simplydo/files/");
-        File[] files = backupDirectory.listFiles(restoreFilenameFilter);
         adapter.clear();
-        for(File f : files)
+        if(backupDirectory.isDirectory())
         {
-            adapter.add(new NameOnlyFile(f));
+            File[] files = backupDirectory.listFiles(restoreFilenameFilter);
+            for(File f : files)
+            {
+                adapter.add(new NameOnlyFile(f));
+            }
+            adapter.sort(comparator);
         }
-        adapter.sort(comparator);
         adapter.notifyDataSetChanged();
     }
     
