@@ -81,7 +81,7 @@ public class ItemPropertiesAdapter extends BaseAdapter
             }
             
             ItemDesc it = dataViewer.getItemData().get(position);
-            TextView t1 = (TextView)rv.findViewById(R.id.text1);
+            TextView t1 = (TextView)rv.findViewById(R.id.ieText1);
             t1.setText(it.getLabel());
             t1.setTextAppearance(context, it.isActive()?R.style.ActiveText:R.style.InactiveText);
             if(it.isActive())
