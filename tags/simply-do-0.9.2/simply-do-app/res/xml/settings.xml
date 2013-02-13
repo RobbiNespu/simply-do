@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android">
+  <ListPreference 
+  		android:title="@string/settingsItemSorting"
+  		android:key="itemSorting"
+  		android:entries="@array/itemSortingEntries"
+        android:entryValues="@array/itemSortingValues" >
+  </ListPreference>
+  <ListPreference 
+  		android:title="@string/settingsListSorting"
+  		android:key="listSorting"
+  		android:entries="@array/listSortingEntries"
+        android:entryValues="@array/listSortingValues" >
+  </ListPreference>
+  <CheckBoxPreference android:title="@string/settingsConfirmDeleteInactive" android:key="confirmDeleteInactive" android:defaultValue="true"></CheckBoxPreference>
+  <Preference android:key="backupDb" android:title="@string/settingsBackupNow">
+  </Preference>
+<Preference android:title="@string/settingsRestore" android:key="restoreDb"></Preference>
+
+</PreferenceScreen>
