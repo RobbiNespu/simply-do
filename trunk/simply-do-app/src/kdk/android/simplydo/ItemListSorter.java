@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 Keith Kildare
+ * Copyright (C) 2014 Keith Kildare
  * 
  * This file is part of SimplyDo.
  * 
@@ -19,6 +19,7 @@
  */
 package kdk.android.simplydo;
 
+import java.text.Collator;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -40,6 +41,7 @@ public class ItemListSorter
     private Comparator<ItemDesc> idCompare;
     private Comparator<ItemDesc> starredCompare;
     private Comparator<ItemDesc> activeStarredCompare;
+    private Collator collator = Collator.getInstance();
 
     
     public ItemListSorter()
@@ -60,7 +62,7 @@ public class ItemListSorter
                 int w2 = o2.isStar()?1:0;
                 if(w2 == w1)
                 {
-                    return o1.getLabel().compareToIgnoreCase(o2.getLabel());
+                	return collator.compare(o1.getLabel(), o2.getLabel());
                 }
                 else
                 {
@@ -77,7 +79,7 @@ public class ItemListSorter
                 int w2 = (o2.isStar()?1:0) + (o2.isActive()?0:-2);
                 if(w2 == w1)
                 {
-                    return o1.getLabel().compareToIgnoreCase(o2.getLabel());
+                	return collator.compare(o1.getLabel(), o2.getLabel());
                 }
                 else
                 {
