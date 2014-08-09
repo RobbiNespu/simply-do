@@ -13,6 +13,12 @@
   		android:entries="@array/listSortingEntries"
         android:entryValues="@array/listSortingValues" >
   </ListPreference>
+  <ListPreference 
+  		android:title="@string/settingsInactiveDecoration"
+  		android:key="inactivateDecoration"
+  		android:entries="@array/inactiveDecorationEntries"
+        android:entryValues="@array/inactiveDecorationValues" >
+  </ListPreference>
   <CheckBoxPreference android:title="@string/settingsConfirmDeleteInactive" android:key="confirmDeleteInactive" android:defaultValue="true"></CheckBoxPreference>
   <Preference android:key="backupDb" android:title="@string/settingsBackupNow">
   </Preference>

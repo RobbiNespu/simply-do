@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="app_name">Simply Do</string>
+<string name="settings_title">Einstellungen</string>
+<string-array name="itemSortingEntries">
+<item>Keine</item>
+<item>Mit Stern zuerst</item>
+<item>Aktive zuerst</item>
+</string-array>
+<string-array name="itemSortingValues">
+<item>none</item>
+<item>starred</item>
+<item>activityStarred</item>
+</string-array>
+<string-array name="listSortingEntries">
+<item>Keine</item>
+<item>Alphabetisch</item>
+</string-array>
+<string-array name="listSortingValues">
+<item>none</item>
+<item>alphabetical</item>
+</string-array>
+<string-array name="inactiveDecorationEntries">
+	<item>Strike/Grey</item>
+	<item>Strike</item>
+	<item>Grey</item>
+</string-array>
+<string-array name="inactiveDecorationValues">
+	<item>strikegrey</item>
+	<item>strike</item>
+	<item>grey</item>
+</string-array>
+<string name="logtag">SimplyDo</string>
+<string name="restore_title">Dateien wiederherstellen</string>
+
+<string name="deleteInactiveTitle">Inaktive löschen?</string>
+<string name="deleteInactiveMessage">Wollen Sie wirklich alle inaktiven Einträge in dieser Liste löschen?</string>
+<string name="deleteInactivePositive">Löschen</string>
+<string name="deleteInactiveNegative">Abbrechen</string>
+
+<string name="moveToTitle">Verschieben</string>
+<string name="moveToPositive">Verschieben</string>
+<string name="moveToNegative">Abbrechen</string>
+<string name="moveToMoved">Eintrag %1$s verschoben zu %2$s</string>
+
+<string name="restoreWarnTitle">Datenbank wiederherstellen</string>
+<string name="restoreWarnMessage">Dieser Vorgang überschreibt alle existierenden Listen und Einträge. Forfahren?</string>
+<string name="restoreWarnPositive">Überschreiben</string>
+<string name="restoreWarnNegative">Abbrechen</string>
+<string name="restoreToastInvalidDB">Der Inhalt dieser Datenbank ist beschädigt und konnte nicht wiederhergestellt werden.</string>
+<string name="restoreToastMountProblem">Das Dateisystem ist nicht korrekt gemountet.</string>
+<string name="restoreToastUnableToMove">Die alte Datenbank kann nicht gelöscht werden.</string>
+<string name="restoreToastCopyFailed">Die Datenbank konnte nicht kopiert werden. Die Wiederherstellung ist fehlgeschlagen.</string>
+<string name="restoreToastRestoreFinished">Datenbank erfolgreich wiederhergestellt.</string>
+
+<string name="settingsMediaReadOnly">Das Ziel-Dateisystem erlaubt keine Schreibvorgänge.</string>
+<string name="settingsMediaNoMount">Zugriff auf das Zielmedium fehlgeschlagen. Ist es gemountet?</string>
+<string name="settingsBackedUp">Gesichert nach %1$s</string>
+<string name="settingsBackUpFailed">Sicherung fehlgeschlagen: %1$s</string>
+<string name="settingsItemSorting">Sortierung von Einträgen</string>
+<string name="settingsListSorting">Sortierung von Listen</string>
+<string name="settingsInactiveDecoration">Inactive Decoration</string>
+<string name="settingsConfirmDeleteInactive">Alle inaktiven Elemente löschen bestätigen</string>
+<string name="settingsBackupNow">Sicherung durchführen</string>
+<string name="settingsRestore">Wiederherstellen</string>
+
+<string name="listDeleteTitle">Löschen?</string>
+<string name="listDeleteMessage">Diese Liste wirklich löschen?</string>
+<string name="listDeletePositive">Löschen</string>
+<string name="listDeleteNegative">Abbrechen</string>
+
+<string name="itemDeleteTitle">Löschen?</string>
+<string name="itemDeleteMessage">Dieser Eintrag ist immer noch aktiv. Woll Sie ihn trotzdem löschen?</string>
+<string name="itemDeletePositive">Löschen</string>
+<string name="itemDeleteNegative">Abbrechen</string>
+
+<string name="itemEditTitle">Eintragstitel bearbeiten</string>
+<string name="itemEditPositive">OK</string>
+<string name="itemEditNegative">Abbrechen</string>
+
+<string name="listEditTitle">Listentitel bearbeiten</string>
+<string name="listEditPositive">OK</string>
+<string name="listEditNegative">Cancel</string>
+
+<string name="optionsMenuDeleteInactive">Alle inaktiven Elemente löschen</string>
+<string name="optionsMenuSettings">Einstellungen</string>
+<string name="optionsMenuSort">Neu sortieren</string>
+
+<string name="itemOptionsTitle">Eintrag-Optionen</string>
+<string name="itemOptionsEdit">Editieren</string>
+<string name="itemOptionsDelete">Löschen</string>
+<string name="itemOptionsRemoveStar">Stern entfernen</string>
+<string name="itemOptionsAddStar">Mit Stern kennzeichnen</string>
+<string name="itemOptionsMoveTo">Verschieben</string>
+
+<string name="listOptionsTitle">Listen-Optionen</string>
+<string name="listOptionsEdit">Editieren</string>
+<string name="listOptionsDelete">Löschen</string>
+
+<string name="addItemButton">Hinzufügen</string>
+<string name="addItemHint">Name des neuen Eintrags</string>
+<string name="addListButton">Hinzufügen</string>
+<string name="addListHint">Name der neuen Liste</string>
+</resources>

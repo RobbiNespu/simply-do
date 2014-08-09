@@ -349,7 +349,10 @@ public class SimplyDoActivity extends Activity
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         
         String itemSort = prefs.getString("itemSorting", ItemListSorter.PREF_ACTIVE_STARRED);
+        String inactiveDecoration = prefs.getString("inactivateDecoration", ItemPropertiesAdapter.PREF_STRIKEGREY);
         //Log.v(L.TAG, "itemSort = " + itemSort);
+        
+        itemPropertiesAdapter.setInactiveDecoration(inactiveDecoration);
         
         itemListSorter.setSortingMode(itemSort);
         itemListSorter.sort(dataViewer.getItemData());
