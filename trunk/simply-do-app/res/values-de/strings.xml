@@ -21,9 +21,9 @@
 <item>alphabetical</item>
 </string-array>
 <string-array name="inactiveDecorationEntries">
-	<item>Strike/Grey</item>
-	<item>Strike</item>
-	<item>Grey</item>
+	<item>Duchstreichen und ausgrauen</item>
+	<item>Durchstreichen</item>
+	<item>Ausgrauen</item>
 </string-array>
 <string-array name="inactiveDecorationValues">
 	<item>strikegrey</item>
@@ -59,7 +59,7 @@
 <string name="settingsBackUpFailed">Sicherung fehlgeschlagen: %1$s</string>
 <string name="settingsItemSorting">Sortierung von Einträgen</string>
 <string name="settingsListSorting">Sortierung von Listen</string>
-<string name="settingsInactiveDecoration">Inactive Decoration</string>
+<string name="settingsInactiveDecoration">Darstellung inaktiver Elemente</string>
 <string name="settingsConfirmDeleteInactive">Alle inaktiven Elemente löschen bestätigen</string>
 <string name="settingsBackupNow">Sicherung durchführen</string>
 <string name="settingsRestore">Wiederherstellen</string>
@@ -80,7 +80,7 @@
 
 <string name="listEditTitle">Listentitel bearbeiten</string>
 <string name="listEditPositive">OK</string>
-<string name="listEditNegative">Cancel</string>
+<string name="listEditNegative">Abbrechen</string>
 
 <string name="optionsMenuDeleteInactive">Alle inaktiven Elemente löschen</string>
 <string name="optionsMenuSettings">Einstellungen</string>
