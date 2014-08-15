@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingTop="0dp"
+    android:paddingBottom="0dp"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+    
+  <View android:background="#ff1111ee" android:layout_width="2dp" android:layout_height="fill_parent" android:visibility="invisible" android:id="@+id/SortedMarker"></View>
+
+  <TextView
+        android:id="@+id/ieText1"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingLeft="10dp"
+    	android:paddingTop="10dp"
+    	android:paddingBottom="10dp"
+        android:text="Name" >
+  </TextView>
+  
+  <ImageSwitcher android:layout_width="wrap_content" android:layout_height="wrap_content" android:paddingTop="10dp" android:paddingBottom="10dp" android:paddingRight="2dp" android:id="@+id/StarSwitcher">
+    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/star" android:visibility="invisible" android:id="@+id/StarImage"></ImageView>
+    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/star_inactive" android:visibility="invisible" android:id="@+id/InactiveStarImage"></ImageView>
+  </ImageSwitcher>
+</LinearLayout>

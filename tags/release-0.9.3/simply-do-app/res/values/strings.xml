@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="app_name">Simply Do</string>
+<string name="settings_title">Settings</string>
+<string-array name="itemSortingEntries">
+<item>None</item>
+<item>Starred First</item>
+<item>Active First</item>
+</string-array>
+<string-array name="itemSortingValues">
+<item>none</item>
+<item>starred</item>
+<item>activityStarred</item>
+</string-array>
+<string-array name="listSortingEntries">
+<item>None</item>
+<item>Alphabetical</item>
+</string-array>
+<string-array name="listSortingValues">
+<item>none</item>
+<item>alphabetical</item>
+</string-array>
+<string-array name="inactiveDecorationEntries">
+	<item>Strike/Grey</item>
+	<item>Strike</item>
+	<item>Grey</item>
+</string-array>
+<string-array name="inactiveDecorationValues">
+	<item>strikegrey</item>
+	<item>strike</item>
+	<item>grey</item>
+</string-array>
+
+<string name="logtag">SimplyDo</string>
+<string name="restore_title">Restore Files</string>
+
+<string name="deleteInactiveTitle">Delete Inactive?</string>
+<string name="deleteInactiveMessage">Are you sure you want to delete all inactive items in this list?</string>
+<string name="deleteInactivePositive">Yes</string>
+<string name="deleteInactiveNegative">No</string>
+
+<string name="moveToTitle">Move To</string>
+<string name="moveToPositive">OK</string>
+<string name="moveToNegative">Cancel</string>
+<string name="moveToMoved">Item %1$s moved to %2$s</string>
+
+<string name="restoreWarnTitle">Restore database</string>
+<string name="restoreWarnMessage">This will overwrite all the existing lists and items. Continue?</string>
+<string name="restoreWarnPositive">Yes</string>
+<string name="restoreWarnNegative">No</string>
+<string name="restoreToastInvalidDB">That database was invalid or corrupted! Not restored.</string>
+<string name="restoreToastMountProblem">Media not mount or read-only</string>
+<string name="restoreToastUnableToMove">Unable to move old database out of the way.</string>
+<string name="restoreToastCopyFailed">Failed to copy restore database into place. Nothing restored.</string>
+<string name="restoreToastRestoreFinished">Database restored.</string>
+
+<string name="settingsMediaReadOnly">Storage media is read-only</string>
+<string name="settingsMediaNoMount">Unable to access storage media. Not mounted?</string>
+<string name="settingsBackedUp">Backed up to %1$s</string>
+<string name="settingsBackUpFailed">Backup failed: %1$s</string>
+<string name="settingsItemSorting">Item Sorting</string>
+<string name="settingsListSorting">List Sorting</string>
+<string name="settingsInactiveDecoration">Inactive Decoration</string>
+<string name="settingsConfirmDeleteInactive">Confirm Delete All Inactive</string>
+<string name="settingsBackupNow">Backup Now</string>
+<string name="settingsRestore">Restore</string>
+
+<string name="listDeleteTitle">Delete?</string>
+<string name="listDeleteMessage">Are you sure you want to delete this list?</string>
+<string name="listDeletePositive">Yes</string>
+<string name="listDeleteNegative">No</string>
+
+<string name="itemDeleteTitle">Delete?</string>
+<string name="itemDeleteMessage">This item is still active. Are you sure you want to delete it?</string>
+<string name="itemDeletePositive">Yes</string>
+<string name="itemDeleteNegative">No</string>
+
+<string name="itemEditTitle">Edit Item Label</string>
+<string name="itemEditPositive">OK</string>
+<string name="itemEditNegative">Cancel</string>
+
+<string name="listEditTitle">Edit List Label</string>
+<string name="listEditPositive">OK</string>
+<string name="listEditNegative">Cancel</string>
+
+<string name="optionsMenuDeleteInactive">Delete All Inactive</string>
+<string name="optionsMenuSettings">Settings</string>
+<string name="optionsMenuSort">Sort Now</string>
+
+<string name="itemOptionsTitle">Item Options</string>
+<string name="itemOptionsEdit">Edit</string>
+<string name="itemOptionsDelete">Delete</string>
+<string name="itemOptionsRemoveStar">Remove Star</string>
+<string name="itemOptionsAddStar">Add Star</string>
+<string name="itemOptionsMoveTo">Move To</string>
+
+<string name="listOptionsTitle">List Options</string>
+<string name="listOptionsEdit">Edit</string>
+<string name="listOptionsDelete">Delete</string>
+
+<string name="addItemButton">Add</string>
+<string name="addItemHint">New Item Name</string>
+<string name="addListButton">Add</string>
+<string name="addListHint">New List Name</string>
+</resources>
