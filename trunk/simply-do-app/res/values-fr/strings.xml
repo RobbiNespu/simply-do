@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Simply Do</string>
+	<string name="settings_title">Paramètres</string>
+	<string-array name="itemSortingEntries">
+		<item>Aucun</item>
+		<item>Favoris en premier</item>
+		<item>Actifs en premier</item>
+	</string-array>
+	<string-array name="itemSortingValues">
+		<item>aucun</item>
+		<item>favoris</item>
+		<item>activityStarred</item>
+	</string-array>
+	<string-array name="listSortingEntries">
+		<item>Aucun</item>
+		<item>Alphabetique</item>
+	</string-array>
+	<string-array name="listSortingValues">
+		<item>aucun</item>
+		<item>alphabetique</item>
+	</string-array>
+	<string-array name="inactiveDecorationEntries">
+        	<item>Inactif/Grisé</item>
+        	<item>Inactif</item>
+        	<item>Grisé</item>
+	</string-array>
+	<string-array name="inactiveDecorationValues">
+		<item>inactifgrise</item>
+		<item>inactif</item>
+		<item>grise</item>
+	</string-array>
+
+	<string name="logtag">SimplyDo</string>
+	<string name="restore_title">Restaurer</string>
+
+	<string name="deleteInactiveTitle">Supprimer les inactifs ?</string>
+	<string name="deleteInactiveMessage">Êtes vous sûr de vouloir supprimer tous les éléments inactifs de cette liste ?</string>
+	<string name="deleteInactivePositive">Oui</string>
+	<string name="deleteInactiveNegative">Non</string>
+
+	<string name="moveToTitle">Déplacer vers</string>
+	<string name="moveToPositive">OK</string>
+	<string name="moveToNegative">Annuler</string>
+	<string name="moveToMoved">Élément %1$s déplacé vers %2$s</string>
+
+	<string name="restoreWarnTitle">Restaurer la base de données</string>
+	<string name="restoreWarnMessage">Cela écrasera toutes les listes et éléments actuels.\nContinuer ?</string>
+	<string name="restoreWarnPositive">Oui</string>
+	<string name="restoreWarnNegative">Non</string>
+	<string name="restoreToastInvalidDB">Cette base de données est invalide ou corrompue ! Impossible de la restaurer.</string>
+	<string name="restoreToastMountProblem">Mémoire de stockage non montée ou en lecture seule</string>
+	<string name="restoreToastUnableToMove">Impossible de supprimer l\'ancienne base de données.</string>
+	<string name="restoreToastCopyFailed">Impossible de restaurer la base de données.</string>
+	<string name="restoreToastRestoreFinished">Base de données restaurée.</string>
+
+	<string name="settingsMediaReadOnly">Mémoire de stockage en lecture seule</string>
+	<string name="settingsMediaNoMount">Impossible d\'accéder à la mémoire de stockage. Est-elle montée ?</string>
+	<string name="settingsBackedUp">%1$s sauvegardé</string>
+	<string name="settingsBackUpFailed">Sauvegarde échouée : %1$s</string>
+	<string name="settingsItemSorting">Tri des éléments</string>
+	<string name="settingsListSorting">Tri des listes</string>
+	<string name="settingsInactiveDecoration">Marque d\'inactivité</string>
+	<string name="settingsConfirmDeleteInactive">Supprimer les éléments inactifs ?</string>
+	<string name="settingsBackupNow">Sauvegarder</string>
+	<string name="settingsRestore">Restaurer</string>
+
+	<string name="listDeleteTitle">Supprimer ?</string>
+	<string name="listDeleteMessage">Êtes vous sûr de vouloir supprimer cette liste ?</string>
+	<string name="listDeletePositive">Oui</string>
+	<string name="listDeleteNegative">Non</string>
+
+	<string name="itemDeleteTitle">Suppimer ?</string>
+	<string name="itemDeleteMessage">Cet élément est toujours actif. Êtes vous sûr de vouloir le supprimer ?</string>
+	<string name="itemDeletePositive">Oui</string>
+	<string name="itemDeleteNegative">Non</string>
+
+	<string name="itemEditTitle">Modifier le nom de l\'élément</string>
+	<string name="itemEditPositive">OK</string>
+	<string name="itemEditNegative">Annuler</string>
+
+	<string name="listEditTitle">Modifier le nom de la liste</string>
+	<string name="listEditPositive">OK</string>
+	<string name="listEditNegative">Annuler</string>
+
+	<string name="optionsMenuDeleteInactive">Supprimer tous les inactifs</string>
+	<string name="optionsMenuSettings">Paramètres</string>
+	<string name="optionsMenuSort">Trier</string>
+
+	<string name="itemOptionsTitle">Options de l\'élément</string>
+	<string name="itemOptionsEdit">Modifier</string>
+	<string name="itemOptionsDelete">Supprimer</string>
+	<string name="itemOptionsRemoveStar">Retirer des favoris</string>
+	<string name="itemOptionsAddStar">Favoris</string>
+	<string name="itemOptionsMoveTo">Déplacer</string>
+
+	<string name="listOptionsTitle">Options de la liste</string>
+	<string name="listOptionsEdit">Modifier</string>
+	<string name="listOptionsDelete">Supprimer</string>
+
+	<string name="addItemButton">Ajouter</string>
+	<string name="addItemHint">Nom de l\'élément</string>
+	<string name="addListButton">Ajouter</string>
+	<string name="addListHint">Nom de la liste</string>
+</resources>
