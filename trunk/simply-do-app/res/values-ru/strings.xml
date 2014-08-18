@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="app_name">Simply Do</string>
+<string name="settings_title">Настройки</string>
+<string-array name="itemSortingEntries">
+<item>Нет</item>
+<item>Сперва отмеченные</item>
+<item>Сперва активные</item>
+</string-array>
+<string-array name="itemSortingValues">
+<item>none</item>
+<item>starred</item>
+<item>activityStarred</item>
+</string-array>
+<string-array name="listSortingEntries">
+<item>Нет</item>
+<item>По алфавиту</item>
+</string-array>
+<string-array name="listSortingValues">
+<item>none</item>
+<item>alphabetical</item>
+</string-array>
+<string-array name="inactiveDecorationEntries">
+	<item>Перечёркнутые/серые</item>
+	<item>Перечёркнутые</item>
+	<item>Серые</item>
+</string-array>
+<string-array name="inactiveDecorationValues">
+	<item>strikegrey</item>
+	<item>strike</item>
+	<item>grey</item>
+</string-array>
+
+<string name="logtag">SimplyDo</string>
+<string name="restore_title">Файлы восстановления</string>
+
+<string name="deleteInactiveTitle">Удалить неактивные?</string>
+<string name="deleteInactiveMessage">Вы уверены, что хотите удалить все неактивные пункты этого списка?</string>
+<string name="deleteInactivePositive">Да</string>
+<string name="deleteInactiveNegative">Нет</string>
+
+<string name="moveToTitle">Переместить в</string>
+<string name="moveToPositive">OK</string>
+<string name="moveToNegative">Отмена</string>
+<string name="moveToMoved">Пункт %1$s перемещён в %2$s</string>
+
+<string name="restoreWarnTitle">Восстановление базы данных</string>
+<string name="restoreWarnMessage">Все существующие списки и пункты будут перезаписаны. Продолжить?</string>
+<string name="restoreWarnPositive">Да</string>
+<string name="restoreWarnNegative">Нет</string>
+<string name="restoreToastInvalidDB">База данных несовместима или повреждена! Восстановление прервано.</string>
+<string name="restoreToastMountProblem">Хранилище не присоединено или доступно только для чтения.</string>
+<string name="restoreToastUnableToMove">Невозможно удалить старую базу данных.</string>
+<string name="restoreToastCopyFailed">Невозможно скопировать базу для восстановления. Восстановление прервано.</string>
+<string name="restoreToastRestoreFinished">База данных восстановлена.</string>
+
+<string name="settingsMediaReadOnly">Хранилище доступно только для чтения</string>
+<string name="settingsMediaNoMount">Невозможно получить доступ к хранилищу. Не присоединено?</string>
+<string name="settingsBackedUp">Резервная копия записана в %1$s</string>
+<string name="settingsBackUpFailed">Резервное копирование не удалось: %1$s</string>
+<string name="settingsItemSorting">Сортировка пунктов</string>
+<string name="settingsListSorting">Сортировка списков</string>
+<string name="settingsInactiveDecoration">Оформление неактивных пунктов</string>
+<string name="settingsConfirmDeleteInactive">Подтверждать массовое удаление</string>
+<string name="settingsBackupNow">Резервное копирование</string>
+<string name="settingsRestore">Восстановление</string>
+
+<string name="listDeleteTitle">Удалить?</string>
+<string name="listDeleteMessage">Вы уверены, что хотите удалить этот список?</string>
+<string name="listDeletePositive">Да</string>
+<string name="listDeleteNegative">Нет</string>
+
+<string name="itemDeleteTitle">Удалить?</string>
+<string name="itemDeleteMessage">Этот пункт ещё активен. Вы уверены, что хотите его удалить?</string>
+<string name="itemDeletePositive">Да</string>
+<string name="itemDeleteNegative">Нет</string>
+
+<string name="itemEditTitle">Редактирование пункта</string>
+<string name="itemEditPositive">OK</string>
+<string name="itemEditNegative">Отмена</string>
+
+<string name="listEditTitle">Редактирование списка</string>
+<string name="listEditPositive">OK</string>
+<string name="listEditNegative">Отмена</string>
+
+<string name="optionsMenuDeleteInactive">Удалить все неактивные пункты</string>
+<string name="optionsMenuSettings">Настройки</string>
+<string name="optionsMenuSort">Сортировать</string>
+
+<string name="itemOptionsTitle">Свойства пункта</string>
+<string name="itemOptionsEdit">Редактировать</string>
+<string name="itemOptionsDelete">Удалить</string>
+<string name="itemOptionsRemoveStar">Снять отметку</string>
+<string name="itemOptionsAddStar">Отметить</string>
+<string name="itemOptionsMoveTo">Переместить</string>
+
+<string name="listOptionsTitle">Свойства списка</string>
+<string name="listOptionsEdit">Редактировать</string>
+<string name="listOptionsDelete">Удалить</string>
+
+<string name="addItemButton">Добавить</string>
+<string name="addItemHint">Новый пункт</string>
+<string name="addListButton">Добавить</string>
+<string name="addListHint">Новый список</string>
+</resources>
